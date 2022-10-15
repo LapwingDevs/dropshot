@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\DropShot.Domain\DropShot.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
