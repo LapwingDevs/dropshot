@@ -5,7 +5,6 @@ public class Variant
     public int Id { get; set; }
     public decimal Price { get; set; }
     public int Size { get; set; }
-    public string UnitOfSize { get; set; }
     
     public Product Product { get; set; }
     public int ProductId { get; set; }

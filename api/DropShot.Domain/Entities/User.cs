@@ -9,7 +9,6 @@ public class User
 
 
     public Address Address { get; set; }
-    public int AddressId { get; set; }
 
     public Guid ApplicationUserId { get; set; }
 }
