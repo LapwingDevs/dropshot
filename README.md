@@ -20,6 +20,8 @@ Enter address, username and password into from and you can connect to the server
 
 c) Entity Framework
 
+Swap your database data in connection string in `api/DropShot.API/appsettings.json`
+
 dotnet ef example commands from `/api` directory
 
 ```
