@@ -1,3 +1,5 @@
+using DropShot.Infrastructure;
+
 const string defaultCorsPolicy = "CorsPolicy";
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,20 +21,19 @@ builder.Services.AddCors(options =>
         });
 });
 
+builder.Services.AddInfrastructure(builder.Configuration);
+
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsProduction() == false)
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
 app.UseCors(defaultCorsPolicy);
-
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
