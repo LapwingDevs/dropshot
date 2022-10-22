@@ -1,12 +1,15 @@
 ﻿using DropShot.Application.Common.AutoMapper;
 using DropShot.Domain.Entities;
 
-namespace DropShot.Application.Models.Drops;
+namespace DropShot.Application.Interfaces;
 
-public class DropCardDto : IMapFrom<Drop>
+public class DropDetailsDto : IMapFrom<Drop>
 {
     public int Id { get; set; }
     public string Name { get; set; }
+    public string Description { get; set; }
     public DateTime StartDateTime { get; set; }
     public DateTime EndDateTime { get; set; }
+
+    public ICollection<DropItem> DropItems { get; set; }
 }
