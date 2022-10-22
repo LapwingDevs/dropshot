@@ -1,7 +1,7 @@
 ﻿using DropShot.Application.Common.AutoMapper;
 using DropShot.Domain.Entities;
 
-namespace DropShot.Application.Models.Drops;
+namespace DropShot.Application.Drops.Models;
 
 public class DropCardDto : IMapFrom<Drop>
 {

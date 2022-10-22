@@ -16,11 +16,11 @@ public class DropShotDbContext : DbContext, IDbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Variant> Variants { get; set; }
-    
+
     public DropShotDbContext(DbContextOptions<DropShotDbContext> options) : base(options)
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder) => 
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
 }

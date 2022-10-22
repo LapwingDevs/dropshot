@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DropShot.Infrastructure", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DropShot.Domain", "DropShot.Domain\DropShot.Domain.csproj", "{5DFAEA5F-956E-4B0E-8B03-AD5746F9FF5B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{23B6D659-1C46-4F91-A823-82C2E409B793}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,7 @@ Global
 		{5DFAEA5F-956E-4B0E-8B03-AD5746F9FF5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DFAEA5F-956E-4B0E-8B03-AD5746F9FF5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DFAEA5F-956E-4B0E-8B03-AD5746F9FF5B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 EndGlobal

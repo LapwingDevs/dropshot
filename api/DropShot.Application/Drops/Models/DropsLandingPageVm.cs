@@ -1,6 +1,6 @@
-﻿namespace DropShot.Application.Models.Drops;
+﻿namespace DropShot.Application.Drops.Models;
 
-public class DropsVm
+public class DropsLandingPageVm
 {
     public IReadOnlyCollection<DropCardDto> ActiveDrops { get; set; }
     public IReadOnlyCollection<DropCardDto> IncomingDrops { get; set; }
