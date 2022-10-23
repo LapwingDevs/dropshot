@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import Drops from "./Drops/Drops";
 import ErrorPage from "./ErrorPage/ErrorPage";
 import Login from "./Login/Login";
 import Register from "./Register/Register";
@@ -17,5 +18,9 @@ export const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/drops",
+    element: <Drops />,
   },
 ]);
