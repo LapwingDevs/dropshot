@@ -2,9 +2,7 @@ using DropShot.Application.Common;
 using DropShot.Application.Drops;
 using DropShot.Application.Drops.Interfaces;
 using DropShot.Application.Drops.Models;
-using DropShot.Domain.Entities;
-using FluentAssertions;
-using Moq;
+
 
 namespace DropShot.Application.UnitTests.Drops;
 
