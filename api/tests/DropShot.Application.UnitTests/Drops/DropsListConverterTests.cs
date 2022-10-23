@@ -95,6 +95,64 @@ public class DropsListConverterTests
     }
 
     [Fact]
+    public void should_sort_active_drops_correctly()
+    {
+        var drop1 = new DropCardDto()
+        {
+            Id = 1,
+            StartDateTime = DateTime.UtcNow.AddDays(-1),
+            EndDateTime = DateTime.UtcNow.AddDays(1)
+        };
+        var drop2 = new DropCardDto()
+        {
+            Id = 2,
+            StartDateTime = DateTime.UtcNow.AddDays(-7),
+            EndDateTime = DateTime.UtcNow.AddDays(2)
+        };
+        var drop3 = new DropCardDto()
+        {
+            Id = 3,
+            StartDateTime = DateTime.UtcNow.AddDays(-3),
+            EndDateTime = DateTime.UtcNow.AddHours(2)
+        };
+        
+        var vm = _dropsListConverter.ConvertDropsListToLandingPageVm(new List<DropCardDto>() { drop1, drop2, drop3 });
+
+        vm.ActiveDrops.ElementAt(0).Should().Be(drop3);
+        vm.ActiveDrops.ElementAt(1).Should().Be(drop1);
+        vm.ActiveDrops.ElementAt(2).Should().Be(drop2);
+    }
+
+    [Fact]
+    public void should_sort_incoming_drops_correctly()
+    {
+        var drop1 = new DropCardDto()
+        {
+            Id = 1,
+            StartDateTime = DateTime.UtcNow.AddDays(5),
+            EndDateTime = DateTime.UtcNow.AddDays(7)
+        };
+        var drop2 = new DropCardDto()
+        {
+            Id = 2,
+            StartDateTime = DateTime.UtcNow.AddDays(3),
+            EndDateTime = DateTime.UtcNow.AddDays(15)
+        };
+        var drop3 = new DropCardDto()
+        {
+            Id = 3,
+            StartDateTime = DateTime.UtcNow.AddHours(3),
+            EndDateTime = DateTime.UtcNow.AddHours(2)
+        };
+        
+        var vm = _dropsListConverter.ConvertDropsListToLandingPageVm(new List<DropCardDto>() { drop1, drop2, drop3 });
+
+        vm.IncomingDrops.ElementAt(0).Should().Be(drop3);
+        vm.IncomingDrops.ElementAt(1).Should().Be(drop2);
+        vm.IncomingDrops.ElementAt(2).Should().Be(drop1);
+    }
+    
+    [Fact]
     public void should_return_empty_vm()
     {
         var drops = new List<DropCardDto>();

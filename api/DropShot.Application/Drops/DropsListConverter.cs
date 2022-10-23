@@ -37,8 +37,8 @@ public class DropsListConverter : IDropsListConverter
 
         return new DropsLandingPageVm()
         {
-            ActiveDrops = activeDrops,
-            IncomingDrops = incomingDrops
+            ActiveDrops = activeDrops.OrderBy(x => x.EndDateTime).ToList(),
+            IncomingDrops = incomingDrops.OrderBy(x => x.StartDateTime).ToList()
         };
     }
 }
