@@ -5,6 +5,8 @@ import Login from './Login/Login';
 import Register from './Register/Register';
 import Root from './Root/Root';
 
+import React from 'react';
+
 export const router = createBrowserRouter([
   {
     path: '/',

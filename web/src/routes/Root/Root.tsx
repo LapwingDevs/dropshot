@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { ping } from '../../api/controllers/MaintenanceClient';
 import { useNavigate } from 'react-router-dom';

@@ -1,5 +1,6 @@
-import { DropCardDto } from "../../../api/models/Drops/DropCardDto";
-import "./DropCard.scss";
+import React from 'react';
+import { DropCardDto } from '../../../api/models/Drops/DropCardDto';
+import './DropCard.scss';
 
 interface DropCardProps {
   drop: DropCardDto;
