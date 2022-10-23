@@ -1,6 +1,6 @@
-import { RouterProvider } from "react-router-dom";
-import TopBar from "./components/TopBar/TopBar";
-import { router } from "./routes/router";
+import { RouterProvider } from 'react-router-dom';
+import TopBar from './components/TopBar/TopBar';
+import { router } from './routes/router';
 
 const App = () => {
   // useAuth

@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
-import { getDrops } from "../../api/controllers/DropsClient";
-import { DropCardDto } from "../../api/models/Drops/DropCardDto";
-import DropCard from "../../components/Drops/DropCard/DropCard";
-import "./Drops.scss";
+import { useCallback, useEffect, useState } from 'react';
+import { getDrops } from '../../api/controllers/DropsClient';
+import { DropCardDto } from '../../api/models/Drops/DropCardDto';
+import DropCard from '../../components/Drops/DropCard/DropCard';
+import './Drops.scss';
 
 const Drops = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -26,7 +26,7 @@ const Drops = () => {
   }
 
   return (
-    <div>
+    <div className="drops-container">
       <div>active</div>
       <div>
         {activeDrops.map((drop) => {

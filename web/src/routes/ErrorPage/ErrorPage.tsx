@@ -1,4 +1,4 @@
-import "./ErrorPage.scss";
+import './ErrorPage.scss';
 
 const ErrorPage = () => {
   return <div>Error page</div>;

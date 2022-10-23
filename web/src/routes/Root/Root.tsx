@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { ping } from "../../api/controllers/MaintenanceClient";
-import { useNavigate } from "react-router-dom";
-import "./Root.scss";
+import { useEffect, useState } from 'react';
+import { ping } from '../../api/controllers/MaintenanceClient';
+import { useNavigate } from 'react-router-dom';
+import './Root.scss';
 
 const Root = () => {
   // GET FROM STATE
@@ -17,7 +17,7 @@ const Root = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/drops");
+      navigate('/drops');
     }
   }, [isAuthenticated, navigate]);
 
