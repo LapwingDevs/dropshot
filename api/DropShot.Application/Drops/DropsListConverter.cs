@@ -20,6 +20,11 @@ public class DropsListConverter : IDropsListConverter
 
         foreach (var drop in drops)
         {
+            if (drop.EndDateTime < _dateTime.Now)
+            {
+                continue;
+            }
+
             if (drop.StartDateTime > _dateTime.Now)
             {
                 incomingDrops.Add(drop);
