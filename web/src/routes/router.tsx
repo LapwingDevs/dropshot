@@ -6,6 +6,7 @@ import Register from './Register/Register';
 import Root from './Root/Root';
 
 import React from 'react';
+import AdminPanel from './AdminPanel/AdminPanel';
 
 export const router = createBrowserRouter([
   {
@@ -24,5 +25,9 @@ export const router = createBrowserRouter([
   {
     path: '/drops',
     element: <Drops />,
+  },
+  {
+    path: '/admin-panel',
+    element: <AdminPanel />,
   },
 ]);
