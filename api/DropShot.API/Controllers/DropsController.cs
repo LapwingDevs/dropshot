@@ -16,7 +16,7 @@ public class DropsController : ControllerBase
         _dropsService = dropsService;
     }
 
-    [HttpGet("dropId")]
+    [HttpGet("{dropId}")]
     public async Task<DropDetailsDto> GetDropDetails(int dropId)
     {
         return await _dropsService.GetDropDetails(dropId);
