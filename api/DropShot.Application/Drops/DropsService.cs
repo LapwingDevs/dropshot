@@ -26,21 +26,11 @@ public class DropsService : IDropsService
         _dropsListConverter = dropsListConverter;
     }
 
-    public async Task<DropsLandingPageVm> GetDrops()
-    {
-        var drops = await _dbContext.Drops
-            .Where(d => d.EndDateTime > _dateTime.Now)
-            .ProjectTo<DropCardDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();
-
-        return _dropsListConverter.ConvertDropsListToLandingPageVm(drops);
-    }
-
     public async Task<DropDetailsDto> GetDropDetails(int dropId)
     {
         if (dropId < 0)
         {
-            throw new ArgumentOutOfRangeException("Drop id must be greater than 0");
+            throw new ArgumentOutOfRangeException(nameof(dropId));
         }
 
         var drop = await _dbContext.Drops
@@ -54,6 +44,23 @@ public class DropsService : IDropsService
 
         return _mapper.Map<DropDetailsDto>(drop);
     }
+
+    public async Task<DropsLandingPageVm> GetDrops()
+    {
+        var drops = await _dbContext.Drops
+            .Where(d => d.EndDateTime > _dateTime.Now)
+            .ProjectTo<DropCardDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+
+        return _dropsListConverter.ConvertDropsListToLandingPageVm(drops);
+    }
+
+    public async Task<IEnumerable<DropDetailsDto>> GetDropsWithDetails() =>
+        await _dbContext.Drops
+            .Include(d => d.DropItems)
+            .Where(d => d.EndDateTime > _dateTime.Now)
+            .ProjectTo<DropDetailsDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
 
     public async Task AddDrop(AddDropRequest request)
     {

@@ -6,5 +6,7 @@ public interface IDropsService
 {
     Task<DropsLandingPageVm> GetDrops();
     Task<DropDetailsDto> GetDropDetails(int dropId);
+    Task<IEnumerable<DropDetailsDto>> GetDropsWithDetails();
+    
     Task AddDrop(AddDropRequest request);
 }

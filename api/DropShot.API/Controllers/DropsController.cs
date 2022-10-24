@@ -16,17 +16,25 @@ public class DropsController : ControllerBase
         _dropsService = dropsService;
     }
 
+    [HttpGet("dropId")]
+    public async Task<DropDetailsDto> GetDropDetails(int dropId)
+    {
+        return await _dropsService.GetDropDetails(dropId);
+    }
+
     [HttpGet]
     public async Task<DropsLandingPageVm> GetDrops()
     {
         return await _dropsService.GetDrops();
     }
 
-    [HttpGet("dropId")]
-    public async Task<DropDetailsDto> GetDropDetails(int dropId)
+    // ADMIN PANEL ENDPOINT
+    [HttpGet]
+    public async Task<IEnumerable<DropDetailsDto>> GetDropsWithDetails()
     {
-        return await _dropsService.GetDropDetails(dropId);
+        return await _dropsService.GetDropsWithDetails();
     }
+
 
     [HttpPost]
     public async Task AddDrop(AddDropRequest request)
