@@ -1,19 +1,34 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
-interface IDropDetailsParams {
-  id: string;
-}
+import { getDropDetails } from '../../api/controllers/DropsClient';
+import { DropDetailsDto } from '../../api/models/Drops/DropDetailsDto';
 
 const DropDetails = () => {
+  const [drop, setDrop] = useState<DropDetailsDto | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { id } = useParams();
 
-  //   const fetchDropDetails = useCallback(() => {}, []);
+  const fetchDropDetails = useCallback(() => {
+    if (id) {
+      getDropDetails(+id).then((dropDetails) => {
+        setDrop(dropDetails);
+        setIsLoading(false);
+      });
+    }
+  }, []);
 
   useEffect(() => {
-    console.log(id);
+    fetchDropDetails();
   }, []);
-  return <div>drop details</div>;
+
+  if (isLoading) {
+    return <div>loading..</div>;
+  }
+  return (
+    <div>
+      drop details {drop?.name}, {drop?.description}
+    </div>
+  );
 };
 
 export default DropDetails;
