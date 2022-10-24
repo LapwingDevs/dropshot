@@ -1,21 +1,28 @@
-import { createBrowserRouter } from "react-router-dom";
-import ErrorPage from "./ErrorPage/ErrorPage";
-import Login from "./Login/Login";
-import Register from "./Register/Register";
-import Root from "./Root/Root";
+import { createBrowserRouter } from 'react-router-dom';
+import Drops from './Drops/Drops';
+import ErrorPage from './ErrorPage/ErrorPage';
+import Login from './Login/Login';
+import Register from './Register/Register';
+import Root from './Root/Root';
+
+import React from 'react';
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Root />,
     errorElement: <ErrorPage />,
   },
   {
-    path: "/login",
+    path: '/login',
     element: <Login />,
   },
   {
-    path: "/register",
+    path: '/register',
     element: <Register />,
+  },
+  {
+    path: '/drops',
+    element: <Drops />,
   },
 ]);

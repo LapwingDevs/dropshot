@@ -1,9 +1,10 @@
-﻿using DropShot.Domain.Entities;
+﻿using DropShot.Application.Common;
+using DropShot.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DropShot.Infrastructure.DAL;
 
-public class DropShotDbContext : DbContext
+public class DropShotDbContext : DbContext, IDbContext
 {
     public DbSet<Address> Addresses { get; set; }
     public DbSet<Cart> Carts { get; set; }
@@ -15,11 +16,11 @@ public class DropShotDbContext : DbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Variant> Variants { get; set; }
-    
+
     public DropShotDbContext(DbContextOptions<DropShotDbContext> options) : base(options)
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder) => 
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
 }

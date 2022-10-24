@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DropShot.Application.Common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,6 +11,8 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetValue<string>("Postgres:ConnectionString");
         services.AddDbContext<DropShotDbContext>(options => options.UseNpgsql(connectionString));
+
+        services.AddScoped<IDbContext>(provider => provider.GetRequiredService<DropShotDbContext>());
 
         return services;
     }

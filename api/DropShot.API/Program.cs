@@ -1,3 +1,4 @@
+using DropShot.Application;
 using DropShot.Infrastructure;
 
 const string defaultCorsPolicy = "CorsPolicy";
@@ -21,7 +22,9 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services
+    .AddInfrastructure(builder.Configuration)
+    .AddApplication(builder.Configuration);
 
 var app = builder.Build();
 
