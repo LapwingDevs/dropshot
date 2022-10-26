@@ -24,6 +24,13 @@ public class ProductsService : IProductsService
             .ProjectTo<ProductOnListDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
 
+    public async Task<ProductDetailsDto> GetProductById(int productId)
+    {
+        var product = await _dbContext.Products.SingleOrDefaultAsync(x => x.Id == productId);
+        // It may crash because during mapping VariantOnProductDto
+        return _mapper.Map<ProductDetailsDto>(product);
+    }
+
     public async Task AddProduct(AddProductRequest request)
     {
         await _dbContext.Products.AddAsync(new Product()

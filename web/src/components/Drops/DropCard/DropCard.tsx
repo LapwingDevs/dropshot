@@ -11,7 +11,7 @@ interface DropCardProps {
 const DropCard = ({ drop }: DropCardProps) => {
   const navigate = useNavigate();
 
-  return <div onClick={() => navigate(`/drop/${drop.id}`)}>{drop.name}</div>;
+  return <div onClick={() => navigate(`${drop.id}`)}>{drop.name}</div>;
 };
 
 export default DropCard;

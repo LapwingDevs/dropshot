@@ -27,7 +27,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         {/* Authenticated paths */}
         <Route path="/drops" element={<Drops />} />
-        <Route path="/drop/:dropId" element={<DropDetails />} />
+        <Route path="/drops/:dropId" element={<DropDetails />} />
         <Route path="/admin-panel" element={<AdminPanel />} />
         <Route path="/admin-panel/users-management" element={<UsersManagement />} />
         <Route path="/admin-panel/drops-management" element={<DropsManagement />} />
