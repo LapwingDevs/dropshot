@@ -4,6 +4,9 @@ import TopBar from './components/TopBar/TopBar';
 import Account from './routes/Account/Account';
 import AdminPanel from './routes/AdminPanel/AdminPanel';
 import DropsManagement from './routes/AdminPanel/DropsManagement/DropsManagement';
+import AddNewProduct from './routes/AdminPanel/ProductsManagement/AddNewProduct/AddNewProduct';
+import Product from './routes/AdminPanel/ProductsManagement/ProductPage/Product';
+import ProductsManagement from './routes/AdminPanel/ProductsManagement/ProductsManagement';
 import UsersManagement from './routes/AdminPanel/UsersManagement/UsersManagement';
 import DropDetails from './routes/DropDetails/DropDetails';
 import Drops from './routes/Drops/Drops';
@@ -24,10 +27,13 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         {/* Authenticated paths */}
         <Route path="/drops" element={<Drops />} />
-        <Route path="/drop/:id" element={<DropDetails />} />
+        <Route path="/drops/:dropId" element={<DropDetails />} />
         <Route path="/admin-panel" element={<AdminPanel />} />
         <Route path="/admin-panel/users-management" element={<UsersManagement />} />
         <Route path="/admin-panel/drops-management" element={<DropsManagement />} />
+        <Route path="/admin-panel/products-management" element={<ProductsManagement />} />
+        <Route path="/admin-panel/products-management/:productId" element={<Product />} />
+        <Route path="/admin-panel/products-management/new" element={<AddNewProduct />} />
         <Route path="/account" element={<Account />} />
         {/*  */}
         <Route path="*" element={<ErrorPage />} />
