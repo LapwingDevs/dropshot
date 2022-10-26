@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
 using DropShot.Application.Drops;
 using DropShot.Application.Drops.Interfaces;
+using DropShot.Application.Products;
+using DropShot.Application.Products.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +16,8 @@ public static class DependencyInjection
 
         services.AddTransient<IDropsService, DropsService>();
         services.AddTransient<IDropsListConverter, DropsListConverter>();
+
+        services.AddTransient<IProductsService, ProductsService>();
 
         return services;
     }

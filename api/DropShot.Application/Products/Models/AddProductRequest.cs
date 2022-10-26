@@ -1,14 +1,11 @@
 ﻿using DropShot.Domain.Enums;
 
-namespace DropShot.Domain.Entities;
+namespace DropShot.Application.Products.Models;
 
-public class Product
+public class AddProductRequest
 {
-    public int Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public decimal Price { get; set; }
     public ClothesUnitOfMeasure UnitOfSize { get; set; }
-
-    public ICollection<Variant> Variants { get; set; }
-}   
+}

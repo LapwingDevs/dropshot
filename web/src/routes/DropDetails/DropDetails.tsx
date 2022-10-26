@@ -6,11 +6,11 @@ import { DropDetailsDto } from '../../api/models/Drops/DropDetailsDto';
 const DropDetails = () => {
   const [drop, setDrop] = useState<DropDetailsDto | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { id } = useParams();
+  const { dropId } = useParams();
 
   const fetchDropDetails = useCallback(() => {
-    if (id) {
-      getDropDetails(+id).then((dropDetails) => {
+    if (dropId) {
+      getDropDetails(+dropId).then((dropDetails) => {
         setDrop(dropDetails);
         setIsLoading(false);
       });
