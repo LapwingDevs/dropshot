@@ -4,6 +4,7 @@ using DropShot.Application.Common;
 using DropShot.Application.Products.Interfaces;
 using DropShot.Application.Products.Models;
 using DropShot.Domain.Entities;
+using DropShot.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace DropShot.Application.Products;
@@ -26,8 +27,20 @@ public class ProductsService : IProductsService
 
     public async Task<ProductDetailsDto> GetProductById(int productId)
     {
-        var product = await _dbContext.Products.SingleOrDefaultAsync(x => x.Id == productId);
-        // It may crash because during mapping VariantOnProductDto
+        var product = await _dbContext.Products
+            .Include(p => p.Variants)
+            .SingleOrDefaultAsync(x => x.Id == productId);
+
+        if (product is null)
+        {
+            throw new Exception($"Cannot find product with id {productId}");
+        }
+
+        product.Variants = product.Variants
+            .Where(v => v.Status == VariantStatus.Warehouse)
+            .OrderBy(x => x.Size)
+            .ToList();
+
         return _mapper.Map<ProductDetailsDto>(product);
     }
 
