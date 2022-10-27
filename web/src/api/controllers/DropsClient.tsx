@@ -1,4 +1,5 @@
 import AxiosClient from '../Client';
+import { AddDropRequest } from '../models/Drops/AddDropRequest';
 import { DropDetailsDto } from '../models/Drops/DropDetailsDto';
 import { DropsLandingPageVm } from '../models/Drops/DropsLandingPageVm';
 
@@ -16,4 +17,8 @@ const getDropsWithDetails = async (): Promise<DropDetailsDto[]> => {
   return (await AxiosClient.get(`${controllerName}/admin`)).data;
 };
 
-export { getDrops, getDropDetails, getDropsWithDetails };
+const addDrop = async (request: AddDropRequest): Promise<null> => {
+  return (await AxiosClient.post(`${controllerName}`, request)).data;
+};
+
+export { getDrops, getDropDetails, getDropsWithDetails, addDrop };
