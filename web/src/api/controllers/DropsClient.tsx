@@ -13,7 +13,7 @@ const getDropDetails = async (dropId: number): Promise<DropDetailsDto> => {
 };
 
 const getDropsWithDetails = async (): Promise<DropDetailsDto[]> => {
-  return (await AxiosClient.get(`${controllerName}`)).data;
+  return (await AxiosClient.get(`${controllerName}/admin`)).data;
 };
 
 export { getDrops, getDropDetails, getDropsWithDetails };

@@ -39,6 +39,6 @@ public class DropsController : ControllerBase
     [HttpPost]
     public async Task AddDrop(AddDropRequest request)
     {
-        // await _dropsService.AddDrop(request);
+        await _dropsService.AddDrop(request);
     }
 }

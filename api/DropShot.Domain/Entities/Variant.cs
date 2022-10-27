@@ -6,7 +6,7 @@ public class Variant
 {
     public int Id { get; set; }
     public int Size { get; set; }
-    public VariantStatus Status { get; } = VariantStatus.Warehouse;
+    public VariantStatus Status { get; set; } = VariantStatus.Warehouse;
 
     public Product Product { get; set; }
     public int ProductId { get; set; }
