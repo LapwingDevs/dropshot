@@ -11,5 +11,5 @@ public class DropDetailsDto : IMapFrom<Drop>
     public DateTime StartDateTime { get; set; }
     public DateTime EndDateTime { get; set; }
 
-    public ICollection<DropItem> DropItems { get; set; }
+    public ICollection<DropItemDto> DropItems { get; set; }
 }

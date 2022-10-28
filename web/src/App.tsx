@@ -3,7 +3,9 @@ import { BrowserRouter, Route, RouterProvider, Routes } from 'react-router-dom';
 import TopBar from './components/TopBar/TopBar';
 import Account from './routes/Account/Account';
 import AdminPanel from './routes/AdminPanel/AdminPanel';
+import AddNewDrop from './routes/AdminPanel/DropsManagement/AddNewDrop/AddNewDrop';
 import DropsManagement from './routes/AdminPanel/DropsManagement/DropsManagement';
+import ManageDropPage from './routes/AdminPanel/DropsManagement/ManageDropPage/ManageDropPage';
 import AddNewProduct from './routes/AdminPanel/ProductsManagement/AddNewProduct/AddNewProduct';
 import Product from './routes/AdminPanel/ProductsManagement/ProductPage/Product';
 import ProductsManagement from './routes/AdminPanel/ProductsManagement/ProductsManagement';
@@ -31,6 +33,8 @@ const App = () => {
         <Route path="/admin-panel" element={<AdminPanel />} />
         <Route path="/admin-panel/users-management" element={<UsersManagement />} />
         <Route path="/admin-panel/drops-management" element={<DropsManagement />} />
+        <Route path="/admin-panel/drops-management/:dropId" element={<ManageDropPage />} />
+        <Route path="/admin-panel/drops-management/new" element={<AddNewDrop />} />
         <Route path="/admin-panel/products-management" element={<ProductsManagement />} />
         <Route path="/admin-panel/products-management/:productId" element={<Product />} />
         <Route path="/admin-panel/products-management/new" element={<AddNewProduct />} />

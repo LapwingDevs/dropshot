@@ -2,6 +2,8 @@
 using DropShot.Application.Products.Interfaces;
 using DropShot.Application.Products.Models;
 using DropShot.Domain.Entities;
+using DropShot.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace DropShot.Application.Products;
 
@@ -13,6 +15,20 @@ public class VariantsService : IVariantsService
     {
         _dbContext = dbContext;
     }
+
+    public async Task<IEnumerable<VariantDto>> GetAllVariantsInWarehouse() =>
+        await _dbContext.Variants
+            .Include(v => v.Product)
+            .Where(v => v.Status == VariantStatus.Warehouse)
+            .OrderBy(v => v.Product.Name)
+            .Select(v => new VariantDto()
+            {
+                VariantId = v.Id,
+                ProductId = v.Product.Id,
+                ProductName = v.Product.Name,
+                UnitOfSize = v.Product.UnitOfSize,
+                Size = v.Size
+            }).ToListAsync();
 
     public async Task AddVariantToProduct(AddVariantToProductRequest request)
     {
@@ -28,8 +44,9 @@ public class VariantsService : IVariantsService
             Size = request.Size,
             ProductId = request.ProductId
         };
-        
+
         await _dbContext.Variants.AddAsync(variant);
         await _dbContext.SaveChangesAsync(CancellationToken.None);
     }
 }
+
