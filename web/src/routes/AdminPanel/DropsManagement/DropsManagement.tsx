@@ -1,8 +1,10 @@
 import { Button } from '@mui/material';
+import { format } from 'date-fns';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getDropsWithDetails } from '../../../api/controllers/DropsClient';
 import { DropDetailsDto } from '../../../api/models/Drops/DropDetailsDto';
+import { appDateFormat } from '../../../constants/Dates';
 
 const DropsManagement = () => {
   const [drops, setDrops] = useState<DropDetailsDto[]>([]);
@@ -28,7 +30,14 @@ const DropsManagement = () => {
       {drops.map((drop) => {
         return (
           <div key={drop.id}>
-            {drop.name}, {drop.startDateTime}, {drop.endDateTime}
+            <span>
+              <b>{drop.name} </b> |{' '}
+            </span>
+            <span>{format(new Date(drop.startDateTime), appDateFormat)} | </span>
+            <span>{format(new Date(drop.endDateTime), appDateFormat)}</span>
+            <span>
+              <Button onClick={() => navigate(drop.id.toString())}>Open</Button>
+            </span>
           </div>
         );
       })}

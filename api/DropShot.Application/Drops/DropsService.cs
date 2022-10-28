@@ -66,6 +66,16 @@ public class DropsService : IDropsService
 
     public async Task AddDrop(AddDropRequest request)
     {
+        if (request.DropItems.Any() == false)
+        {
+            throw new Exception("Cannot add drop without items");
+        }
+
+        if (request.StartDateTime > request.EndDateTime)
+        {
+            throw new Exception("Cannot set start date after end date");
+        }
+        
         var drop = new Drop()
         {
             Name = request.Name,

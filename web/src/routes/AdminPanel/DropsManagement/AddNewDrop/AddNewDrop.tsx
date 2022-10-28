@@ -3,11 +3,13 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { getWarehouseVariants } from '../../../../api/controllers/VariantsClient';
 import { AddDropRequest } from '../../../../api/models/Drops/AddDropRequest';
-import { CreateDropItemDto } from '../../../../api/models/Drops/CreateDropItemDto';
 import { VariantDto } from '../../../../api/models/Variants/VariantDto';
 import { addDays } from 'date-fns';
 import { addDrop } from '../../../../api/controllers/DropsClient';
 import { useNavigate } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { appDateFormat } from '../../../../constants/Dates';
 
 interface IFormData {
   name: string;
@@ -52,8 +54,8 @@ const AddNewDrop = () => {
     const request: AddDropRequest = {
       name: data.name,
       description: data.description,
-      startDateTime: addDays(new Date(), -1),
-      endDateTime: addDays(new Date(), 2),
+      startDateTime: data.startDateTime,
+      endDateTime: data.endDateTime,
       dropItems: data.selectedVariants.map((i) => {
         return { quantity: 1, variantId: i };
       }),
@@ -106,6 +108,39 @@ const AddNewDrop = () => {
             )}
           />
         </div>
+
+        <div>
+          <Controller
+            name={'startDateTime'}
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <DatePicker
+                selected={value}
+                onChange={onChange}
+                timeInputLabel="Time:"
+                dateFormat={appDateFormat}
+                showTimeInput
+              />
+            )}
+          />
+        </div>
+
+        <div>
+          <Controller
+            name={'endDateTime'}
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <DatePicker
+                selected={value}
+                onChange={onChange}
+                timeInputLabel="Time:"
+                dateFormat={appDateFormat}
+                showTimeInput
+              />
+            )}
+          />
+        </div>
+
         <Button onClick={handleSubmit((data) => submitDrop(data))}>Submit</Button>
       </form>
     </div>
