@@ -3,7 +3,7 @@ import { CreateDropItemDto } from './CreateDropItemDto';
 export interface AddDropRequest {
   name: string;
   description: string;
-  startDateTime: string;
-  endDateTime: string;
+  startDateTime: Date;
+  endDateTime: Date;
   dropItems: CreateDropItemDto[];
 }

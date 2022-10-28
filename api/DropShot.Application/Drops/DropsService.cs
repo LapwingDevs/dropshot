@@ -82,6 +82,7 @@ public class DropsService : IDropsService
         
         await _dbContext.Drops.AddAsync(drop);
         await SetVariantsStatusAsInDrop(request);
+        
         await _dbContext.SaveChangesAsync(CancellationToken.None);
     }
 
