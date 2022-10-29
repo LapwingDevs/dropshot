@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, RouterProvider, Routes } from 'react-router-dom';
-import TopBar from './components/TopBar/TopBar';
+import TopBar from './components/Common/TopBar/TopBar';
 import Account from './routes/Account/Account';
 import AdminPanel from './routes/AdminPanel/AdminPanel';
 import AddNewDrop from './routes/AdminPanel/DropsManagement/AddNewDrop/AddNewDrop';

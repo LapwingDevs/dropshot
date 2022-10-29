@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { getProductById } from '../../../../api/controllers/ProductsClient';
-import { addVariantToProduct } from '../../../../api/controllers/VariantsClient';
+import { addVariantToProduct, removeVariant } from '../../../../api/controllers/VariantsClient';
 import { ProductDetailsDto } from '../../../../api/models/Products/ProductDetailsDto';
 import { AddVariantRequest } from '../../../../api/models/Variants/AddVariantRequest';
 
@@ -43,6 +43,12 @@ const Product = () => {
     });
   };
 
+  const remove = (variantId: number) => {
+    removeVariant(variantId).then(() => {
+      fetchProduct();
+    });
+  };
+
   useEffect(() => {
     fetchProduct();
   }, [fetchProduct]);
@@ -62,7 +68,14 @@ const Product = () => {
       {product && product?.variants.length > 0 && (
         <div>
           {product.variants.map((variant) => {
-            return <div key={variant.id}>variant: {variant.size}</div>;
+            return (
+              <div key={variant.id}>
+                <span>variant: {variant.size}</span>
+                <span>
+                  <Button onClick={() => remove(variant.id)}>Remove</Button>
+                </span>
+              </div>
+            );
           })}
         </div>
       )}
