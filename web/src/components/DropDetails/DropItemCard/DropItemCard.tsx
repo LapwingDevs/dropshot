@@ -1,16 +1,17 @@
 import React from 'react';
 import { Button, Card } from '@mui/material';
-import { DropItem } from '../../../api/models/Drops/DropItem';
+import { DropItemDto } from '../../../api/models/Drops/DropItemDto';
 import './DropItemCard.scss';
 
 interface DropItemProps {
-  dropItem: DropItem;
+  dropItem: DropItemDto;
 }
 
 const DropItemCard = ({ dropItem }: DropItemProps) => {
   return (
     <Card className="drop-item-container">
-      <div>{dropItem.id}</div>
+      <div>{dropItem.productName}</div>
+      <div>{dropItem.size}</div>
       <Button>Add to cart</Button>
     </Card>
   );

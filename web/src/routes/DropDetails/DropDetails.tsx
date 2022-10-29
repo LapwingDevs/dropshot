@@ -44,7 +44,7 @@ const DropDetails = () => {
 
           <div className="drop-items-wrapper">
             {drop.dropItems.map((dropItem) => {
-              return <DropItemCard key={dropItem.id} dropItem={dropItem} />;
+              return <DropItemCard key={dropItem.dropItemId} dropItem={dropItem} />;
             })}
           </div>
         </div>
