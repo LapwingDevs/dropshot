@@ -3,6 +3,8 @@ using AutoMapper.QueryableExtensions;
 using DropShot.Application.Common;
 using DropShot.Application.Drops.Interfaces;
 using DropShot.Application.Drops.Models;
+using DropShot.Domain.Entities;
+using DropShot.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace DropShot.Application.Drops;
@@ -35,6 +37,8 @@ public class DropsService : IDropsService
 
         var drop = await _dbContext.Drops
             .Include(d => d.DropItems)
+            .ThenInclude(i => i.Variant)
+            .ThenInclude(v => v.Product)
             .SingleOrDefaultAsync(d => d.Id == dropId);
 
         if (drop is null)
@@ -42,7 +46,23 @@ public class DropsService : IDropsService
             throw new Exception($"Cannot find drop with id {dropId}");
         }
 
-        return _mapper.Map<DropDetailsDto>(drop);
+        return new DropDetailsDto()
+        {
+            Id = drop.Id,
+            Description = drop.Description,
+            Name = drop.Name,
+            StartDateTime = drop.StartDateTime,
+            EndDateTime = drop.EndDateTime,
+            DropItems = drop.DropItems.Select(x => new DropItemDto()
+            {
+                DropItemId = x.Id,
+                VariantId = x.VariantId,
+                ProductId = x.Variant.ProductId,
+                ProductName = x.Variant.Product.Name,
+                UnitOfSize = x.Variant.Product.UnitOfSize,
+                Size = x.Variant.Size
+            }).ToList()
+        };
     }
 
     public async Task<DropsLandingPageVm> GetDrops()
@@ -55,42 +75,53 @@ public class DropsService : IDropsService
         return _dropsListConverter.ConvertDropsListToLandingPageVm(drops);
     }
 
-    public async Task<IEnumerable<DropDetailsDto>> GetDropsWithDetails() =>
+    public async Task<IEnumerable<AdminDropDto>> GetDropsWithDetails() =>
         await _dbContext.Drops
-            .Include(d => d.DropItems)
             .Where(d => d.EndDateTime > _dateTime.Now)
-            .ProjectTo<DropDetailsDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<AdminDropDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
 
     public async Task AddDrop(AddDropRequest request)
     {
-        // var dateNow = DateTime.UtcNow;
-        //
-        // await _dbContext.Drops.AddRangeAsync(new[]
-        // {
-        //     new Drop()
-        //     {
-        //         Name = "Empty drop / incoming 1",
-        //         Description = "Description",
-        //         StartDateTime = dateNow.AddDays(3),
-        //         EndDateTime = dateNow.AddDays(4)
-        //     },
-        //     new Drop()
-        //     {
-        //         Name = "Empty drop / incoming 1",
-        //         Description = "Description",
-        //         StartDateTime = dateNow.AddDays(5),
-        //         EndDateTime = dateNow.AddDays(7)
-        //     },
-        //     new Drop()
-        //     {
-        //         Name = "Empty drop / active",
-        //         Description = "Description",
-        //         StartDateTime = dateNow.AddDays(-1),
-        //         EndDateTime = dateNow.AddDays(1)
-        //     }
-        // });
-        //
-        // await _dbContext.SaveChangesAsync(CancellationToken.None);
+        if (request.DropItems.Any() == false)
+        {
+            throw new Exception("Cannot add drop without items");
+        }
+
+        if (request.StartDateTime > request.EndDateTime)
+        {
+            throw new Exception("Cannot set start date after end date");
+        }
+
+        var drop = new Drop()
+        {
+            Name = request.Name,
+            Description = request.Description,
+            StartDateTime = request.StartDateTime,
+            EndDateTime = request.EndDateTime,
+            DropItems = request.DropItems.Select(i =>
+                new DropItem()
+                {
+                    // Quantity = i.Quantity,
+                    VariantId = i.VariantId
+                }).ToList()
+        };
+
+        await _dbContext.Drops.AddAsync(drop);
+        await SetVariantsStatusAsInDrop(request);
+
+        await _dbContext.SaveChangesAsync(CancellationToken.None);
+    }
+
+    private async Task SetVariantsStatusAsInDrop(AddDropRequest request)
+    {
+        var variantsAddedToDrop = await _dbContext.Variants
+            .Where(v => request.DropItems.Select(x => x.VariantId).Contains(v.Id))
+            .ToListAsync();
+
+        foreach (var variant in variantsAddedToDrop)
+        {
+            variant.Status = VariantStatus.Drop;
+        }
     }
 }

@@ -1,4 +1,4 @@
-import { DropItem } from './DropItem';
+import { DropItemDto } from './DropItemDto';
 
 export interface DropDetailsDto {
   id: number;
@@ -6,5 +6,5 @@ export interface DropDetailsDto {
   description: string;
   startDateTime: string;
   endDateTime: string;
-  dropItems: DropItem[];
+  dropItems: DropItemDto[];
 }

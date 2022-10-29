@@ -3,6 +3,8 @@ using DropShot.Application.Auth;
 using DropShot.Application.Auth.Interfaces;
 using DropShot.Application.Drops;
 using DropShot.Application.Drops.Interfaces;
+using DropShot.Application.Products;
+using DropShot.Application.Products.Interfaces;
 using DropShot.Application.User;
 using DropShot.Application.User.Interfaces;
 using DropShot.Application.Users;
@@ -17,10 +19,11 @@ public static class DependencyInjection
     {
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-        services.AddTransient<IAuthService, AuthService>();
-        services.AddTransient<IUserService, UserService>();
         services.AddTransient<IDropsService, DropsService>();
         services.AddTransient<IDropsListConverter, DropsListConverter>();
+
+        services.AddTransient<IProductsService, ProductsService>();
+        services.AddTransient<IVariantsService, VariantsService>();
 
         return services;
     }

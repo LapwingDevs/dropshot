@@ -1,0 +1,12 @@
+.drop-container {
+  .title {
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+  .drop-items-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

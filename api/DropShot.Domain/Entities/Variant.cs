@@ -1,11 +1,13 @@
-﻿namespace DropShot.Domain.Entities;
+﻿using DropShot.Domain.Enums;
+
+namespace DropShot.Domain.Entities;
 
 public class Variant
 {
     public int Id { get; set; }
-    public decimal Price { get; set; }
     public int Size { get; set; }
-    
+    public VariantStatus Status { get; set; } = VariantStatus.Warehouse;
+
     public Product Product { get; set; }
     public int ProductId { get; set; }
 
