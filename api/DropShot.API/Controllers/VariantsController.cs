@@ -26,4 +26,10 @@ public class VariantsController : ControllerBase
     {
         await _variantsService.AddVariantToProduct(request);
     }
+
+    [HttpDelete("{variantId}")]
+    public async Task RemoveVariant(int variantId)
+    {
+        await _variantsService.RemoveVariant(variantId);
+    }
 }

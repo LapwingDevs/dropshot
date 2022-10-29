@@ -17,12 +17,4 @@ const addProduct = async (request: AddProductRequest): Promise<null> => {
   return (await AxiosClient.post(`${controllerName}`, request)).data;
 };
 
-// const getDropDetails = async (dropId: number): Promise<DropDetailsDto> => {
-//   return (await AxiosClient.get(`${controllerName}/${dropId}`)).data;
-// };
-
-// const getDropsWithDetails = async (): Promise<DropDetailsDto[]> => {
-//   return (await AxiosClient.get(`${controllerName}`)).data;
-// };
-
 export { getProducts, getProductById, addProduct };

@@ -3,11 +3,11 @@ import { format } from 'date-fns';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getDropsWithDetails } from '../../../api/controllers/DropsClient';
-import { DropDetailsDto } from '../../../api/models/Drops/DropDetailsDto';
+import { AdminDropDto } from '../../../api/models/Drops/AdminDropDto';
 import { appDateFormat } from '../../../constants/Dates';
 
 const DropsManagement = () => {
-  const [drops, setDrops] = useState<DropDetailsDto[]>([]);
+  const [drops, setDrops] = useState<AdminDropDto[]>([]);
   const navigate = useNavigate();
 
   const fetchDrops = useCallback(() => {

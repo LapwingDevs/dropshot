@@ -30,7 +30,7 @@ public class DropsController : ControllerBase
 
     // ADMIN PANEL ENDPOINT
     [HttpGet("admin")]
-    public async Task<IEnumerable<DropDetailsDto>> GetDropsWithDetails()
+    public async Task<IEnumerable<AdminDropDto>> GetDropsWithDetails()
     {
         return await _dropsService.GetDropsWithDetails();
     }

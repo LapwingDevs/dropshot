@@ -48,5 +48,16 @@ public class VariantsService : IVariantsService
         await _dbContext.Variants.AddAsync(variant);
         await _dbContext.SaveChangesAsync(CancellationToken.None);
     }
-}
 
+    public async Task RemoveVariant(int variantId)
+    {
+        var variant = await _dbContext.Variants.FindAsync(variantId);
+        if (variant is null)
+        {
+            throw new Exception($"Cannot find product with id {variantId}");
+        }
+
+        _dbContext.Variants.Remove(variant);
+        await _dbContext.SaveChangesAsync(CancellationToken.None);
+    }
+}

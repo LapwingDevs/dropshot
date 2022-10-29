@@ -12,4 +12,8 @@ const getWarehouseVariants = async (): Promise<VariantDto[]> => {
   return (await AxiosClient.get(`${controllerName}/warehouse`)).data;
 };
 
-export { addVariantToProduct, getWarehouseVariants };
+const removeVariant = async (variantId: number): Promise<null> => {
+  return (await AxiosClient.delete(`${controllerName}/${variantId}`)).data;
+};
+
+export { addVariantToProduct, getWarehouseVariants, removeVariant };

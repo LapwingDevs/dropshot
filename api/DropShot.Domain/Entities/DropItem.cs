@@ -3,7 +3,7 @@
 public class DropItem
 {
     public int Id { get; set; }
-    public int Quantity { get; set; }
+    // public int Quantity { get; set; }
 
     public Drop Drop { get; set; }
     public int DropId { get; set; }

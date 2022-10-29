@@ -57,7 +57,10 @@ const AddNewDrop = () => {
       startDateTime: data.startDateTime,
       endDateTime: data.endDateTime,
       dropItems: data.selectedVariants.map((i) => {
-        return { quantity: 1, variantId: i };
+        return {
+          // quantity: 1,
+          variantId: i,
+        };
       }),
     };
 
