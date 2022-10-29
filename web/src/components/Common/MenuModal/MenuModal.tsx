@@ -23,7 +23,6 @@ const MenuModal = ({ isOpen, handleClose }: MenuModalProps) => {
       onRequestClose={handleClose}
       className="menu-modal-container"
       overlayClassName="menu-modal-overlay"
-      ariaHideApp={true}
     >
       <div>
         <div>

@@ -14,7 +14,6 @@ const CartModal = ({ isOpen, handleClose }: CartModalProps) => {
       onRequestClose={handleClose}
       className="cart-modal-container"
       overlayClassName="cart-modal-overlay"
-      ariaHideApp={true}
     >
       <div>cart modal</div>
     </Modal>
