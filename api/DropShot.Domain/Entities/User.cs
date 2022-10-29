@@ -10,5 +10,5 @@ public class User
 
     public Address Address { get; set; }
 
-    public Guid ApplicationUserId { get; set; }
+    public string ApplicationUserId { get; set; }
 }
