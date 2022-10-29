@@ -16,7 +16,7 @@ const CartModal = ({ isOpen, handleClose }: CartModalProps) => {
       overlayClassName="cart-modal-overlay"
       ariaHideApp={true}
     >
-      <div>hej modal</div>
+      <div>cart modal</div>
     </Modal>
   );
 };

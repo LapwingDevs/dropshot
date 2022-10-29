@@ -3,9 +3,11 @@ import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import './TopBar.scss';
 import CartModal from '../CartModal/CartModal';
+import MenuModal from '../MenuModal/MenuModal';
 
 const TopBar = () => {
   const [cartIsOpen, setCartIsOpen] = useState<boolean>(false);
+  const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -18,20 +20,14 @@ const TopBar = () => {
             sx={{ flexGrow: 1 }}
             onClick={() => navigate('/drops')}
           >
-            Dropshot
+            DropShot
           </Typography>
 
-          <Button onClick={() => navigate('/admin-panel')} color="secondary">
-            Admin panel
-          </Button>
-          <Button onClick={() => navigate('/account')} color="secondary">
-            Account
-          </Button>
           <Button color="secondary" onClick={() => setCartIsOpen(true)}>
             Cart
           </Button>
-          <Button onClick={() => navigate('/login')} color="secondary">
-            Logout
+          <Button color="secondary" onClick={() => setMenuIsOpen(true)}>
+            Menu
           </Button>
 
           <Button onClick={() => navigate('/login')} color="secondary">
@@ -43,6 +39,7 @@ const TopBar = () => {
         </Toolbar>
       </AppBar>
       <CartModal isOpen={cartIsOpen} handleClose={() => setCartIsOpen(false)} />
+      <MenuModal isOpen={menuIsOpen} handleClose={() => setMenuIsOpen(false)} />
     </Box>
   );
 };
