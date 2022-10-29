@@ -85,7 +85,7 @@ public class DropsService : IDropsService
             DropItems = request.DropItems.Select(i =>
                 new DropItem()
                 {
-                    Quantity = i.Quantity,
+                    // Quantity = i.Quantity,
                     VariantId = i.VariantId
                 }).ToList()
         };

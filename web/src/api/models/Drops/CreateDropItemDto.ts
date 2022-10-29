@@ -1,4 +1,4 @@
 export interface CreateDropItemDto {
-  quantity: number;
+  // quantity: number;
   variantId: number;
 }
