@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { getDrops } from '../../api/controllers/DropsClient';
 import { DropCardDto } from '../../api/models/Drops/DropCardDto';
 import DropCard from '../../components/Drops/DropCard/DropCard';
+import { DropStatus } from '../../constants/Drops';
 import './Drops.scss';
 
 const Drops = () => {
@@ -28,16 +29,16 @@ const Drops = () => {
 
   return (
     <div className="drops-container">
-      <div>active</div>
-      <div>
+      <div className="section-title">active</div>
+      <div className="section-content">
         {activeDrops.map((drop) => {
-          return <DropCard key={drop.id} drop={drop} />;
+          return <DropCard key={drop.id} drop={drop} dropStatus={DropStatus.ActiveDrop} />;
         })}
       </div>
-      <div>incoming</div>
-      <div>
+      <div className="section-title">incoming</div>
+      <div className="section-content">
         {incomingDrops.map((drop) => {
-          return <DropCard key={drop.id} drop={drop} />;
+          return <DropCard key={drop.id} drop={drop} dropStatus={DropStatus.IncomingDrop} />;
         })}
       </div>
     </div>
