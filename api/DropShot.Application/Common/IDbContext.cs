@@ -13,7 +13,7 @@ public interface IDbContext
     DbSet<Order> Orders { get; set; }
     DbSet<OrderItem> OrderItems { get; set; }
     DbSet<Product> Products { get; set; }
-    DbSet<User> Users { get; set; }
+    DbSet<Domain.Entities.User> Users { get; set; }
     DbSet<Variant> Variants { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
