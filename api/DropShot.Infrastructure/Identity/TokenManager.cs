@@ -1,10 +1,12 @@
+using System.IdentityModel.Tokens.Jwt;
 using DropShot.Application.Common;
 using DropShot.Infrastructure.Identity.Helpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 
-namespace DropShot.API.Middleware;
+namespace DropShot.Infrastructure.Identity;
 
 public class TokenManager : ITokenManager
 {
@@ -29,17 +31,38 @@ public class TokenManager : ITokenManager
         _authSettings = authSettings;
     }
     
-    
-
     public async Task<bool> IsCurrentActiveToken()
-        => await IsActive(GetCurrentAsync());
+        => await IsActive(GetCurrent());
 
     public async Task DeactivateCurrent()
-        => await Deactivate(GetCurrentAsync());
+        => await Deactivate(GetCurrent());
 
     public async Task<bool> IsActive(string token)
         => await _cache.GetStringAsync(GetKey(token)) == null;
 
+    
+    public async Task<bool> IsInCorrectRole()
+    {
+        var currentToken = GetCurrent();
+        
+        if (string.IsNullOrEmpty(currentToken))
+        {
+            return true;
+        }
+        
+        var decodedToken = new JwtSecurityTokenHandler().ReadJwtToken(currentToken);
+        var role = decodedToken.Claims.First(c => c.Type == "role");
+
+        var (result, userRoles) = await _identityService.GetUserRolesById(_currentUserService.UserId);
+
+        if (!result.Succeeded || !userRoles.Contains(role.Value))
+        {
+            return false;
+        }
+
+        return true;
+    }
+    
     private async Task Deactivate(string token)
         => await _cache.SetStringAsync(GetKey(token),
             " ", new DistributedCacheEntryOptions
@@ -48,7 +71,7 @@ public class TokenManager : ITokenManager
                     TimeSpan.FromMinutes(_authSettings.Value.Expire)
             });
 
-    private string GetCurrentAsync()
+    private string GetCurrent()
     {
         var authorizationHeader =
             _httpContextAccessor.HttpContext?.Request.Headers["authorization"] ?? StringValues.Empty;

@@ -4,6 +4,7 @@ using DropShot.API.Services;
 using DropShot.Application;
 using DropShot.Application.Common;
 using DropShot.Infrastructure;
+using DropShot.Infrastructure.Identity;
 using DropShot.Infrastructure.Identity.Helpers;
 using Microsoft.OpenApi.Models;
 
@@ -64,7 +65,6 @@ builder.Services
 
 builder.Services.AddTransient<TokenManagerMiddleware>();
 builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
-builder.Services.AddTransient<ITokenManager, TokenManager>();
 
 var app = builder.Build();
 

@@ -7,10 +7,12 @@ public class JWTAuthorizationResult : Result
     }
     
     public string Token { get; set; }
+
+    public string RefreshToken { get; set; }  
     
-    public static JWTAuthorizationResult Success(string token)
+    public static JWTAuthorizationResult Success(string accessToken, string refreshToken)
     {
-        return new JWTAuthorizationResult(true, new string[] { }) { Token = token };
+        return new JWTAuthorizationResult(true, new string[] { }) { Token = accessToken, RefreshToken = refreshToken};
     }
 
     public new static JWTAuthorizationResult Failure(IEnumerable<string> errors)
