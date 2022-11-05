@@ -7,4 +7,5 @@ public interface IUserService
 {
     Task<UserDto> CreateUser(CreateUserRequest createUserRequest);
     Task<UserDto> GetUser(Expression<Func<Domain.Entities.User, bool>> predicate);
+    Task<UserVm> FindUsers(string term);
 }

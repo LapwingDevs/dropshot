@@ -11,4 +11,6 @@ public class UserDto : IMapFrom<Domain.Entities.User>
     public string LastName { get; set; }
 
     public string Email { get; set; }
+    
+    public AddressDto AddressDto { get; set; }
 }
