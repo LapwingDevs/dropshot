@@ -5,6 +5,7 @@ namespace DropShot.Application.Auth.Models;
 public class LoginUserResponse
 {
     public string Token { get; set; }
+    public string RefreshToken { get; set; }
     public UserDto User { get; set; }
     public IEnumerable<string> Errors { get; set; }
 }

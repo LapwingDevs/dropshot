@@ -22,8 +22,10 @@ public static class DependencyInjection
         services.AddTransient<IDropsService, DropsService>();
         services.AddTransient<IDropsListConverter, DropsListConverter>();
 
+        services.AddTransient<IAuthService, AuthService>();
         services.AddTransient<IProductsService, ProductsService>();
         services.AddTransient<IVariantsService, VariantsService>();
+        services.AddTransient<IUserService, UserService>();
 
         return services;
     }
