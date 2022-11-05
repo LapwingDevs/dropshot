@@ -1,4 +1,5 @@
 using System.Net;
+using DropShot.Application.Common;
 
 namespace DropShot.API.Middleware;
 
@@ -13,7 +14,7 @@ public class TokenManagerMiddleware : IMiddleware
     
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
-        if (await _tokenManager.IsCurrentActiveToken())
+        if (await _tokenManager.IsCurrentActiveToken() && await _tokenManager.IsInCorrectRole())
         {
             await next(context);
 

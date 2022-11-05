@@ -4,5 +4,6 @@ public interface ITokenManager
 {
     Task<bool> IsCurrentActiveToken();
     
-    Task<bool> IsActiveAsync(string token);
+    Task<bool> IsActive(string token);
+    Task DeactivateCurrent();
 }
