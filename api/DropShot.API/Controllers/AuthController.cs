@@ -22,13 +22,33 @@ public class AuthController : ControllerBase
     {
         return await _authService.RegisterUser(registerUserDto);
     }
+    
+    [HttpPost("changePassword")]
+    [Authorize]
+    public async Task<Result> ChangeUserPassword(ChangePasswordRequest changePasswordRequest)
+    {
+        return await _authService.ChangePassword(changePasswordRequest);
+    }
 
     [HttpPost("login")]
     public async Task<LoginUserResponse> LoginUser(LoginUserRequest loginUserRequest)
     {
         return await _authService.LoginUser(loginUserRequest);
     }
-    
+
+    [HttpPost("logout/{email}")]
+    [Authorize]
+    public async Task<Result> LogoutUser(string email)
+    {
+        return await _authService.LogoutUser(email);
+    }
+
+    [HttpPost("refreshToken/{token}")]
+    public async Task<JWTAuthorizationResult> RefreshToken(string token)
+    {
+        return await _authService.RefreshToken(token);
+    }
+
     [HttpPost("promote/{email}")]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult> PromoteUserToAdmin(string email)
