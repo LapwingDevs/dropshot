@@ -34,8 +34,10 @@ public static class DependencyInjection
             options.User.RequireUniqueEmail = true;
         });
         services.Configure<AuthSettings>(configuration.GetSection("Authentication"));
-
+        
+        services.AddTransient<Application.Common.IAuthenticationService, AuthenticationService>();
         services.AddTransient<IIdentityService, IdentityService>();
+        services.AddTransient<ITokenManager, TokenManager>();
         
         services.AddAuthentication()
             .AddIdentityServerJwt();
