@@ -3,6 +3,7 @@ using System;
 using DropShot.Infrastructure.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DropShot.Infrastructure.DAL.Migrations
 {
     [DbContext(typeof(DropShotDbContext))]
-    partial class DropShotDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221025211416_ChangedAplicationUserIdType")]
+    partial class ChangedAplicationUserIdType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,6 +91,9 @@ namespace DropShot.Infrastructure.DAL.Migrations
                     b.Property<int>("DropItemId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("ReservationEndDateTime")
                         .HasColumnType("timestamp with time zone");
 
@@ -140,6 +145,9 @@ namespace DropShot.Infrastructure.DAL.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("DropId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
                     b.Property<int>("VariantId")
@@ -195,6 +203,9 @@ namespace DropShot.Infrastructure.DAL.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
                     b.Property<int>("VariantId")
                         .HasColumnType("integer");
 
@@ -222,9 +233,6 @@ namespace DropShot.Infrastructure.DAL.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
 
                     b.Property<string>("UnitOfSize")
                         .IsRequired()
@@ -272,17 +280,14 @@ namespace DropShot.Infrastructure.DAL.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Size")
                         .HasColumnType("integer");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text")
-                        .HasDefaultValue("Warehouse");
 
                     b.HasKey("Id");
 

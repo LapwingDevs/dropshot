@@ -1,6 +1,7 @@
 ﻿using DropShot.Application.Common;
 using DropShot.Infrastructure.AppDateTime;
 using DropShot.Infrastructure.DAL;
+using DropShot.Infrastructure.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +13,8 @@ public static class DependencyInjection
     {
         services.AddPostgres(configuration);
 
+        services.AddIdentity(configuration);
+        
         services.AddSingleton<IAppDateTime, UtcAppDateTime>();
 
         return services;

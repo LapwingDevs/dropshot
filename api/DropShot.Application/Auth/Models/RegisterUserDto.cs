@@ -1,0 +1,16 @@
+using DropShot.Application.Users.Models;
+
+namespace DropShot.Application.Auth.Models;
+
+public class RegisterUserDto
+{
+    public string FirstName { get; set; }
+    
+    public string LastName { get; set; }
+
+    public string Email { get; set; }
+
+    public string Password { get; set; }
+
+    public AddressDto Address { get; set; }
+}
