@@ -75,6 +75,8 @@ public class DeadlinesChecker : BackgroundService
                 if (_schedule[0].ExecuteTime == _appDateTime.Now)
                 {
                     // TODO: DO WORK && REMOVE FROM SCHEDULE
+                    // TODO: for drop: not bought drop items should go back to the warehouse
+                    // TODO: for cart items: not ordered cart items should go back to the drop
                 }
             }
             catch (Exception e)
