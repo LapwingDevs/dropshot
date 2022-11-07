@@ -4,6 +4,4 @@ public enum VariantStatus
 {
     Warehouse,
     Drop,
-    Cart,
-    Ordered
 }
