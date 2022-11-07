@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using DropShot.Application.Carts;
+using DropShot.Application.Carts.Interfaces;
 using DropShot.Application.Drops;
 using DropShot.Application.Drops.Interfaces;
 using DropShot.Application.Products;
@@ -13,6 +15,8 @@ public static class DependencyInjection
     public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+        services.AddTransient<ICartService, CartService>();
 
         services.AddTransient<IDropsService, DropsService>();
         services.AddTransient<IDropsListConverter, DropsListConverter>();

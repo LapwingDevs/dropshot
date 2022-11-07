@@ -15,9 +15,10 @@ public class CartsController : ControllerBase
         _cartService = cartService;
     }
 
-    [HttpGet("user/{userId}")]
-    public Task<UserCartDto> GetUserCart(int userId)
+    [HttpGet]
+    public Task<UserCartDto> GetUserCart()
     {
+        const int userId = 1;
         return _cartService.GetUserCartWithItems(userId);
     }
 

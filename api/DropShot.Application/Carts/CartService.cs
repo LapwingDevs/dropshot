@@ -21,7 +21,7 @@ public class CartService : ICartService
 
     public async Task<UserCartDto> GetUserCartWithItems(int userId)
     {
-        var userCart = GetUserCart(userId);
+        var userCart = await GetUserCart(userId);
 
         var cartItems = await _dbContext.CartItems
             .Include(cartItem => cartItem.DropItem)
@@ -54,15 +54,25 @@ public class CartService : ICartService
         await _dbContext.SaveChangesAsync(CancellationToken.None);
     }
 
-    private Cart GetUserCart(int userId)
+    private async Task<Cart> GetUserCart(int userId)
     {
-        var userCart = _dbContext.Carts.SingleOrDefault(c => c.UserId == userId);
+        var userCart = await _dbContext.Carts.SingleOrDefaultAsync(c => c.UserId == userId);
         if (userCart is null)
         {
-            throw new Exception();
+            return await CreateUserCart(userId);
         }
 
         return userCart;
+    }
+
+    private async Task<Cart> CreateUserCart(int userId)
+    {
+        var cart = new Cart() { UserId = userId };
+
+        await _dbContext.Carts.AddAsync(cart);
+        await _dbContext.SaveChangesAsync(CancellationToken.None);
+
+        return cart;
     }
 
     private async Task CreateCartItem(AddDropItemToUserCartRequest request)

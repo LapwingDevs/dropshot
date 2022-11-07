@@ -5,14 +5,15 @@ import './DropItemCard.scss';
 
 interface DropItemProps {
   dropItem: DropItemDto;
+  addItemToUserCart: () => void;
 }
 
-const DropItemCard = ({ dropItem }: DropItemProps) => {
+const DropItemCard = ({ dropItem, addItemToUserCart }: DropItemProps) => {
   return (
     <Card className="drop-item-container">
       <div>{dropItem.productName}</div>
       <div>{dropItem.size}</div>
-      <Button>Add to cart</Button>
+      <Button onClick={addItemToUserCart}>Add to cart</Button>
     </Card>
   );
 };
