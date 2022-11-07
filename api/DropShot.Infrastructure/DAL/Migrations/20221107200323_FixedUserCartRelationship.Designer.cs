@@ -3,6 +3,7 @@ using System;
 using DropShot.Infrastructure.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DropShot.Infrastructure.DAL.Migrations
 {
     [DbContext(typeof(DropShotDbContext))]
-    partial class DropShotDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221107200323_FixedUserCartRelationship")]
+    partial class FixedUserCartRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,10 +70,12 @@ namespace DropShot.Infrastructure.DAL.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("UserId1")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Carts");
                 });
@@ -253,6 +257,9 @@ namespace DropShot.Infrastructure.DAL.Migrations
                     b.Property<Guid>("ApplicationUserId")
                         .HasColumnType("uuid");
 
+                    b.Property<int>("CartId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
@@ -311,8 +318,8 @@ namespace DropShot.Infrastructure.DAL.Migrations
             modelBuilder.Entity("DropShot.Domain.Entities.Cart", b =>
                 {
                     b.HasOne("DropShot.Domain.Entities.User", "User")
-                        .WithOne("Cart")
-                        .HasForeignKey("DropShot.Domain.Entities.Cart", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -416,9 +423,6 @@ namespace DropShot.Infrastructure.DAL.Migrations
             modelBuilder.Entity("DropShot.Domain.Entities.User", b =>
                 {
                     b.Navigation("Address")
-                        .IsRequired();
-
-                    b.Navigation("Cart")
                         .IsRequired();
                 });
 

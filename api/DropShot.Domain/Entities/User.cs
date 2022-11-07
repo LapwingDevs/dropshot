@@ -11,4 +11,6 @@ public class User
     public Address Address { get; set; }
 
     public Guid ApplicationUserId { get; set; }
+
+    public Cart Cart { get; set; }
 }

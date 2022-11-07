@@ -67,7 +67,10 @@ public class CartService : ICartService
 
     private async Task<Cart> CreateUserCart(int userId)
     {
-        var cart = new Cart() { UserId = userId };
+        var cart = new Cart()
+        {
+            UserId = userId
+        };
 
         await _dbContext.Carts.AddAsync(cart);
         await _dbContext.SaveChangesAsync(CancellationToken.None);
@@ -98,5 +101,6 @@ public class CartService : ICartService
         }
 
         dropItem.Status = DropItemStatus.Ordered;
+        
     }
 }

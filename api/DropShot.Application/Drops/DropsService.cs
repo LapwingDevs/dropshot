@@ -53,7 +53,9 @@ public class DropsService : IDropsService
             Name = drop.Name,
             StartDateTime = drop.StartDateTime,
             EndDateTime = drop.EndDateTime,
-            DropItems = drop.DropItems.Select(x => new DropItemDto()
+            DropItems = drop.DropItems
+                .Where(i => i.Status == DropItemStatus.Available)
+                .Select(x => new DropItemDto()
             {
                 DropItemId = x.Id,
                 VariantId = x.VariantId,
