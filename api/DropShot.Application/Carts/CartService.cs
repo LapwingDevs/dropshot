@@ -3,6 +3,8 @@ using DropShot.Application.Carts.Models;
 using DropShot.Application.Common;
 using DropShot.Domain.Constants;
 using DropShot.Domain.Entities;
+using DropShot.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace DropShot.Application.Carts;
 
@@ -17,12 +19,53 @@ public class CartService : ICartService
         _appDateTime = appDateTime;
     }
 
-    public Task<UserCartDto> GetUserCart(int userId)
+    public async Task<UserCartDto> GetUserCartWithItems(int userId)
     {
-        throw new NotImplementedException();
+        var userCart = GetUserCart(userId);
+
+        var cartItems = await _dbContext.CartItems
+            .Include(cartItem => cartItem.DropItem)
+            .ThenInclude(dropItem => dropItem.Variant)
+            .ThenInclude(variant => variant.Product)
+            .Where(cartItem =>
+                cartItem.CartId == userCart.Id &&
+                cartItem.ReservationEndDateTime > _appDateTime.Now)
+            .ToListAsync();
+
+        return new UserCartDto()
+        {
+            Id = userCart.Id,
+            CartItems = cartItems.Select(cartItem => new CartItemDto()
+            {
+                ProductName = cartItem.DropItem.Variant.Product.Name,
+                VariantSize = cartItem.DropItem.Variant.Size,
+                ProductPrice = cartItem.DropItem.Variant.Product.Price,
+                ItemReservationEndDateTime = cartItem.ReservationEndDateTime
+            })
+        };
     }
 
+
     public async Task AddDropItemToUserCart(AddDropItemToUserCartRequest request)
+    {
+        await CreateCartItem(request);
+        await UpdateStatusOfDropItem(request.DropItemId);
+
+        await _dbContext.SaveChangesAsync(CancellationToken.None);
+    }
+
+    private Cart GetUserCart(int userId)
+    {
+        var userCart = _dbContext.Carts.SingleOrDefault(c => c.UserId == userId);
+        if (userCart is null)
+        {
+            throw new Exception();
+        }
+
+        return userCart;
+    }
+
+    private async Task CreateCartItem(AddDropItemToUserCartRequest request)
     {
         var reservationTime = _appDateTime.Now;
         var cartItem = new CartItem()
@@ -34,6 +77,16 @@ public class CartService : ICartService
         };
 
         await _dbContext.CartItems.AddAsync(cartItem);
-        await _dbContext.SaveChangesAsync(CancellationToken.None);
+    }
+
+    private async Task UpdateStatusOfDropItem(int dropItemId)
+    {
+        var dropItem = await _dbContext.DropItems.FindAsync(dropItemId);
+        if (dropItem is null)
+        {
+            throw new Exception();
+        }
+
+        dropItem.Status = DropItemStatus.Ordered;
     }
 }
