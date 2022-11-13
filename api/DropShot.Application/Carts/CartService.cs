@@ -1,9 +1,11 @@
-﻿using DropShot.Application.Carts.Interfaces;
+﻿using DropShot.Application.Carts.Events;
+using DropShot.Application.Carts.Interfaces;
 using DropShot.Application.Carts.Models;
 using DropShot.Application.Common;
 using DropShot.Domain.Constants;
 using DropShot.Domain.Entities;
 using DropShot.Domain.Enums;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace DropShot.Application.Carts;
@@ -12,11 +14,13 @@ public class CartService : ICartService
 {
     private readonly IDbContext _dbContext;
     private readonly IAppDateTime _appDateTime;
+    private readonly IMediator _mediator;
 
-    public CartService(IDbContext dbContext, IAppDateTime appDateTime)
+    public CartService(IDbContext dbContext, IAppDateTime appDateTime, IMediator mediator)
     {
         _dbContext = dbContext;
         _appDateTime = appDateTime;
+        _mediator = mediator;
     }
 
     public async Task<UserCartDto> GetUserCartWithItems(int userId)
@@ -48,10 +52,12 @@ public class CartService : ICartService
 
     public async Task AddDropItemToUserCart(AddDropItemToUserCartRequest request)
     {
-        await CreateCartItem(request);
+        var cartItem = await CreateCartItem(request);
         await UpdateStatusOfDropItem(request.DropItemId);
 
         await _dbContext.SaveChangesAsync(CancellationToken.None);
+
+        await _mediator.Publish(new CartItemIsAddedEvent(cartItem));
     }
 
     private async Task<Cart> GetUserCart(int userId)
@@ -78,7 +84,7 @@ public class CartService : ICartService
         return cart;
     }
 
-    private async Task CreateCartItem(AddDropItemToUserCartRequest request)
+    private async Task<CartItem> CreateCartItem(AddDropItemToUserCartRequest request)
     {
         var reservationTime = _appDateTime.Now;
         var cartItem = new CartItem()
@@ -90,6 +96,8 @@ public class CartService : ICartService
         };
 
         await _dbContext.CartItems.AddAsync(cartItem);
+
+        return cartItem;
     }
 
     private async Task UpdateStatusOfDropItem(int dropItemId)

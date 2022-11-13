@@ -5,6 +5,7 @@ using DropShot.Application.Drops;
 using DropShot.Application.Drops.Interfaces;
 using DropShot.Application.Products;
 using DropShot.Application.Products.Interfaces;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +15,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddMediatR(Assembly.GetExecutingAssembly());
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
         services.AddTransient<ICartService, CartService>();
