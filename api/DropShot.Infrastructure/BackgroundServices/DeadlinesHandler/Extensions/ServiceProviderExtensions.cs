@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace DropShot.Infrastructure.BackgroundServices.DeadlinesHandler;
+namespace DropShot.Infrastructure.BackgroundServices.DeadlinesHandler.Extensions;
 
 public static class ServiceProviderExtensions
 {

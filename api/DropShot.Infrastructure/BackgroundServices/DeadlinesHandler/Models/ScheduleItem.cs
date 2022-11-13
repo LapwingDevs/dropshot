@@ -1,4 +1,4 @@
-﻿namespace DropShot.Infrastructure.BackgroundServices.DeadlinesHandler;
+﻿namespace DropShot.Infrastructure.BackgroundServices.DeadlinesHandler.Models;
 
 internal record ScheduleItem(
     DateTime ExecuteTime, 

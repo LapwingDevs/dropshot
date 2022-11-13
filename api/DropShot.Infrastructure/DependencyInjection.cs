@@ -2,6 +2,7 @@
 using DropShot.Infrastructure.AppDateTime;
 using DropShot.Infrastructure.BackgroundServices;
 using DropShot.Infrastructure.BackgroundServices.DeadlinesHandler;
+using DropShot.Infrastructure.BackgroundServices.DeadlinesHandler.Extensions;
 using DropShot.Infrastructure.DAL;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,8 +15,7 @@ public static class DependencyInjection
     {
         services.AddPostgres(configuration);
 
-        services.AddHostedService<DeadlinesHandler>();
-        services.AddTransient<IDeadlinesHandlerAccessor, DeadlinesHandlerAccessor>();
+        services.AddDeadlinesHandler();
 
         services.AddSingleton<IAppDateTime, UtcAppDateTime>();
 

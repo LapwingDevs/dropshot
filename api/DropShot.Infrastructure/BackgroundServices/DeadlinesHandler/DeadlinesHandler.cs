@@ -2,6 +2,8 @@
 using DropShot.Domain.Entities;
 using DropShot.Domain.Enums;
 using DropShot.Infrastructure.AppDateTime;
+using DropShot.Infrastructure.BackgroundServices.DeadlinesHandler.ExpiredDeadlinesCleaner;
+using DropShot.Infrastructure.BackgroundServices.DeadlinesHandler.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,14 +16,19 @@ internal class DeadlinesHandler : BackgroundService
 
     private readonly IServiceProvider _serviceProvider;
     private readonly IAppDateTime _appDateTime;
+    private readonly IExpiredDeadlinesCleaner _expiredDeadlinesCleaner;
 
     private List<ScheduleItem> _schedule = new();
 
 
-    public DeadlinesHandler(IServiceProvider serviceProvider, IAppDateTime appDateTime)
+    public DeadlinesHandler(
+        IServiceProvider serviceProvider,
+        IAppDateTime appDateTime,
+        IExpiredDeadlinesCleaner expiredDeadlinesCleaner)
     {
         _serviceProvider = serviceProvider;
         _appDateTime = appDateTime;
+        _expiredDeadlinesCleaner = expiredDeadlinesCleaner;
     }
 
 
@@ -29,8 +36,11 @@ internal class DeadlinesHandler : BackgroundService
     {
         try
         {
-            // TODO: Check on init whether database contains expired drops with not released variants
-            // TODO: Check on init whether database contains expired cart items, not ordered and not released
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<IDbContext>();
+                await _expiredDeadlinesCleaner.Clean(dbContext, cancellationToken);
+            }
 
             await InitSchedule(cancellationToken);
             await base.StartAsync(cancellationToken);

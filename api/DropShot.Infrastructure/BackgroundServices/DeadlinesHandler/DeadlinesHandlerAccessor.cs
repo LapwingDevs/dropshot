@@ -1,6 +1,8 @@
 using DropShot.Application.Common;
 using DropShot.Domain.Entities;
 using DropShot.Infrastructure.AppDateTime;
+using DropShot.Infrastructure.BackgroundServices.DeadlinesHandler.Extensions;
+using DropShot.Infrastructure.BackgroundServices.DeadlinesHandler.Models;
 
 namespace DropShot.Infrastructure.BackgroundServices.DeadlinesHandler;
 
