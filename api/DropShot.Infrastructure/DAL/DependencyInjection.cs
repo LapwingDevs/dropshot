@@ -13,6 +13,7 @@ public static class DependencyInjection
         services.AddDbContext<DropShotDbContext>(options => options.UseNpgsql(connectionString));
 
         services.AddScoped<IDbContext>(provider => provider.GetRequiredService<DropShotDbContext>());
+        services.AddScoped<DropShotDbContextInitializer>();
 
         return services;
     }

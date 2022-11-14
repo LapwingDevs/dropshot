@@ -36,12 +36,7 @@ internal class DeadlinesHandler : BackgroundService
     {
         try
         {
-            using (var scope = _serviceProvider.CreateScope())
-            {
-                var dbContext = scope.ServiceProvider.GetRequiredService<IDbContext>();
-                await _expiredDeadlinesCleaner.Clean(dbContext, cancellationToken);
-            }
-
+            await CleanExpiredDeadlines(cancellationToken);
             await InitSchedule(cancellationToken);
             await base.StartAsync(cancellationToken);
             Console.WriteLine("Hello there - I started my work");
@@ -89,6 +84,15 @@ internal class DeadlinesHandler : BackgroundService
     {
         _schedule.Add(scheduleItem);
         _schedule = _schedule.OrderBy(s => s.ExecuteTime).ToList();
+    }
+
+    private async Task CleanExpiredDeadlines(CancellationToken cancellationToken)
+    {
+        using (var scope = _serviceProvider.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<IDbContext>();
+            await _expiredDeadlinesCleaner.Clean(dbContext, cancellationToken);
+        }
     }
 
     private async Task InitSchedule(CancellationToken cancellationToken)

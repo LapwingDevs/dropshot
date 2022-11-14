@@ -1,5 +1,6 @@
 using DropShot.Application;
 using DropShot.Infrastructure;
+using DropShot.Infrastructure.DAL;
 
 const string defaultCorsPolicy = "CorsPolicy";
 
@@ -32,6 +33,15 @@ if (app.Environment.IsProduction() == false)
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    app.UseDeveloperExceptionPage();
+
+    using (var scope = app.Services.CreateScope())
+    {
+        var initializer = scope.ServiceProvider.GetRequiredService<DropShotDbContextInitializer>();
+        await initializer.InitDatabase();
+        await initializer.SeedDatabase();
+    }
 }
 
 app.UseCors(defaultCorsPolicy);
