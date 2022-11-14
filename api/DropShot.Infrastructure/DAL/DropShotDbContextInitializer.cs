@@ -146,28 +146,28 @@ public class DropShotDbContextInitializer
                     Name = "Incoming 1 $$$",
                     Description = "Description of the drop",
                     StartDateTime = now.AddDays(1),
-                    EndDateTime = now.AddMinutes(5)
+                    EndDateTime = now.AddDays(5)
                 },
                 new()
                 {
                     Name = "Incoming empty",
                     Description = "Description of the drop",
                     StartDateTime = now.AddDays(8),
-                    EndDateTime = now.AddMinutes(10)
+                    EndDateTime = now.AddDays(10)
                 },
                 new()
                 {
                     Name = "Incoming empty 2",
                     Description = "Description of the drop",
                     StartDateTime = now.AddDays(9),
-                    EndDateTime = now.AddMinutes(11)
+                    EndDateTime = now.AddDays(11)
                 },
                 new()
                 {
                     Name = "Incoming empty 3",
                     Description = "Description of the drop",
                     StartDateTime = now.AddDays(10),
-                    EndDateTime = now.AddMinutes(12)
+                    EndDateTime = now.AddDays(12)
                 }
             };
 
