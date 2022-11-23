@@ -17,6 +17,7 @@ internal class DeadlinesHandler : BackgroundService
     private readonly IServiceProvider _serviceProvider;
     private readonly IAppDateTime _appDateTime;
     private readonly IExpiredDeadlinesCleaner _expiredDeadlinesCleaner;
+    private readonly IDropsSocketPublisher _dropsSocketPublisher;
 
     private List<ScheduleItem> _schedule = new();
 
@@ -24,11 +25,13 @@ internal class DeadlinesHandler : BackgroundService
     public DeadlinesHandler(
         IServiceProvider serviceProvider,
         IAppDateTime appDateTime,
-        IExpiredDeadlinesCleaner expiredDeadlinesCleaner)
+        IExpiredDeadlinesCleaner expiredDeadlinesCleaner,
+        IDropsSocketPublisher dropsSocketPublisher)
     {
         _serviceProvider = serviceProvider;
         _appDateTime = appDateTime;
         _expiredDeadlinesCleaner = expiredDeadlinesCleaner;
+        _dropsSocketPublisher = dropsSocketPublisher;
     }
 
 
@@ -148,6 +151,7 @@ internal class DeadlinesHandler : BackgroundService
             cartItem.DropItem.Status = DropItemStatus.Available;
 
             await dbContext.SaveChangesAsync(cancellationToken);
+            await _dropsSocketPublisher.DropItemIsReleased(cartItem.DropItem.DropId, cartItem.DropItemId);
         }
     }
 
