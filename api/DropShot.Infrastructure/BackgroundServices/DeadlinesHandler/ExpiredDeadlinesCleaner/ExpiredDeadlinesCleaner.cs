@@ -21,16 +21,15 @@ internal class ExpiredDeadlinesCleaner : IExpiredDeadlinesCleaner
 
     private async Task CleanCartItems(IDbContext dbContext, CancellationToken cancellationToken)
     {
-        var cartItems = await dbContext.CartItems
+        var cartItemsWithExpiredReservationTimeAndStatusReserved = await dbContext.CartItems
             .Include(i => i.DropItem)
             .Where(i =>
                 i.ReservationEndDateTime < _appDateTime.Now &&
-                i.DropItem.Status != DropItemStatus.Available)
+                i.DropItem.Status == DropItemStatus.Reserved)
             .ToListAsync(cancellationToken);
 
         var cleanedCartItemsCount = 0;
-
-        foreach (var cartItem in cartItems)
+        foreach (var cartItem in cartItemsWithExpiredReservationTimeAndStatusReserved)
         {
             cartItem.DropItem.Status = DropItemStatus.Available;
             cleanedCartItemsCount++;
@@ -43,7 +42,7 @@ internal class ExpiredDeadlinesCleaner : IExpiredDeadlinesCleaner
 
     private async Task CleanDropItemsFromExpiredDrops(IDbContext dbContext, CancellationToken cancellationToken)
     {
-        var dropItems = await dbContext.DropItems
+        var notOrderedDropItemsFromExpiredDrops = await dbContext.DropItems
             .Include(d => d.Drop)
             .Include(d => d.Variant)
             .Where(d =>
@@ -53,7 +52,7 @@ internal class ExpiredDeadlinesCleaner : IExpiredDeadlinesCleaner
             .ToListAsync(cancellationToken);
 
         var cleanedDropItemsCount = 0;
-        foreach (var dropItem in dropItems)
+        foreach (var dropItem in notOrderedDropItemsFromExpiredDrops)
         {
             dropItem.Variant.Status = VariantStatus.Warehouse;
             cleanedDropItemsCount++;
