@@ -74,11 +74,11 @@ const DropDetails = () => {
           connection.invoke('JoinDropHub', dropId);
 
           connection.on('DropItemReserved', (dropItemId: number) => {
-            console.log('DropItemReserved', dropItemId);
+            fetchDropDetails();
           });
 
           connection.on('DropItemReleased', (dropItemId: number) => {
-            console.log('DropItemReleased',dropItemId);
+            fetchDropDetails();
           });
 
           connection.onreconnected(() => {
