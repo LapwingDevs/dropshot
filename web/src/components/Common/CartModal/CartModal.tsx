@@ -1,8 +1,10 @@
 import React from 'react';
 import Modal from 'react-modal';
 import { useCart } from '../../../contexts/CartContext';
-import DateCountdown from '../DateCountdown/DateCountdown';
+import { Button } from '@mui/material';
 import './CartModal.scss';
+import CartItem from '../CartItem/CartItem';
+import { useNavigate } from 'react-router-dom';
 
 interface CartModalProps {
   isOpen: boolean;
@@ -11,6 +13,8 @@ interface CartModalProps {
 
 const CartModal = ({ isOpen, handleClose }: CartModalProps) => {
   const { userCart } = useCart();
+
+  const navigate = useNavigate();
 
   return (
     <Modal
@@ -23,18 +27,11 @@ const CartModal = ({ isOpen, handleClose }: CartModalProps) => {
       <div>
         {userCart &&
           userCart.cartItems.map((item) => {
-            return (
-              <div className="cart-item-wrapper" key={item.itemReservationEndDateTime}>
-                <div>
-                  {item.productName}[{item.variantSize}]
-                </div>
-
-                <div>
-                  <DateCountdown deadline={item.itemReservationEndDateTime} />
-                </div>
-              </div>
-            );
+            return <CartItem key={item.itemReservationEndDateTime} item={item} />;
           })}
+      </div>
+      <div>
+        <Button onClick={() => navigate('/order')}>Order</Button>
       </div>
     </Modal>
   );
