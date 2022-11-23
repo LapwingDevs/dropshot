@@ -19,7 +19,8 @@ builder.Services.AddCors(options =>
             corsPolicyBuilder
                 .WithOrigins(origins)
                 .AllowAnyHeader()
-                .AllowAnyMethod();
+                .AllowAnyMethod()
+                .AllowCredentials();;
         });
 });
 
@@ -49,6 +50,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 
-app.UseWebSockets();
+app.UseInfrastructure();
 
 app.Run();

@@ -151,6 +151,7 @@ internal class DeadlinesHandler : BackgroundService
             cartItem.DropItem.Status = DropItemStatus.Available;
 
             await dbContext.SaveChangesAsync(cancellationToken);
+            
             await _dropsSocketPublisher.DropItemIsReleased(cartItem.DropItem.DropId, cartItem.DropItemId);
         }
     }

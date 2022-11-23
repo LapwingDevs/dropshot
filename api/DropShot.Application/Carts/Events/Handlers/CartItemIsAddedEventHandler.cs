@@ -16,15 +16,12 @@ public class CartItemIsAddedEventHandler : INotificationHandler<CartItemIsAddedE
         _dropsSocketPublisher = dropsSocketPublisher;
     }
 
-    public Task Handle(CartItemIsAddedEvent notification, CancellationToken cancellationToken)
+    public async Task Handle(CartItemIsAddedEvent notification, CancellationToken cancellationToken)
     {
         _deadlinesHandlerAccessor.AddCartItemToSchedule(notification.CartItem);
-        //TODO: Drop id probably is null
         
-        _dropsSocketPublisher.DropItemIsReserved(
-            notification.CartItem.DropItem.DropId, 
+        await _dropsSocketPublisher.DropItemIsReserved(
+            notification.CartItem.DropItem.DropId,
             notification.CartItem.DropItemId);
-        
-        return Task.CompletedTask;
     }
 }
