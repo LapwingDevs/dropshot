@@ -9,9 +9,17 @@ import { DropItemDto } from '../../api/models/Drops/DropItemDto';
 import DropItemCard from '../../components/DropDetails/DropItemCard/DropItemCard';
 import { appDateFormat } from '../../constants/Dates';
 import { useCart } from '../../contexts/CartContext';
+import {
+  HubConnection,
+  HubConnectionBuilder,
+  LogLevel,
+} from '@microsoft/signalr';
+import data from '../../config.json';
 import './DropDetails.scss';
 
 const DropDetails = () => {
+  const [connection, setConnection] = useState<HubConnection | null>(null);
+
   const [drop, setDrop] = useState<DropDetailsDto | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { dropId } = useParams();
@@ -43,6 +51,47 @@ const DropDetails = () => {
       });
     });
   };
+
+  useEffect(() => {
+    if (!dropId) {
+      return;
+    }
+
+    const newConnection = new HubConnectionBuilder()
+      .withUrl(`${data.ApiUrl}DropsSocket`)
+      .configureLogging(LogLevel.Debug)
+      .withAutomaticReconnect()
+      .build();
+
+    setConnection(newConnection);
+  }, [dropId]);
+
+  useEffect(() => {
+    if (connection) {
+      connection
+        .start()
+        .then(() => {
+          connection.invoke('JoinDropHub', dropId);
+
+          connection.on('DropItemReserved', (dropItemId: number) => {
+            console.log('DropItemReserved', dropItemId);
+          });
+
+          connection.on('DropItemReleased', (dropItemId: number) => {
+            console.log('DropItemReleased',dropItemId);
+          });
+
+          connection.onreconnected(() => {
+            connection.invoke('JoinDropHub', dropId);
+          });
+
+          console.log('Connection started.');
+        })
+        .catch((e) => {
+          console.log(`SignalR connection on the client side failed.\nError content: ${e}`);
+        });
+    }
+  }, [connection]);
 
   useEffect(() => {
     fetchDropDetails();
