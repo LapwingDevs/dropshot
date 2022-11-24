@@ -14,6 +14,8 @@ const CartItem = ({ item }: CartItemProps) => {
         {item.productName}[{item.variantSize}]
       </div>
 
+      <div>{item.productPrice} PLN</div>
+
       <div>
         <DateCountdown deadline={item.itemReservationEndDateTime} />
       </div>

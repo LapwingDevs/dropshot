@@ -6,4 +6,5 @@ public class CartItemDto
     public int VariantSize { get; set; }
     public decimal ProductPrice { get; set; }
     public DateTime ItemReservationEndDateTime { get; set; }
+    public int VariantId { get; set; }
 }

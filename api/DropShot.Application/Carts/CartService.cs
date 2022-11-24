@@ -43,6 +43,7 @@ public class CartService : ICartService
             {
                 ProductName = cartItem.DropItem.Variant.Product.Name,
                 VariantSize = cartItem.DropItem.Variant.Size,
+                VariantId = cartItem.DropItem.VariantId,
                 ProductPrice = cartItem.DropItem.Variant.Product.Price,
                 ItemReservationEndDateTime = cartItem.ReservationEndDateTime
             })
@@ -108,7 +109,6 @@ public class CartService : ICartService
             throw new Exception();
         }
 
-        dropItem.Status = DropItemStatus.Ordered;
-        
+        dropItem.Status = DropItemStatus.Reserved;
     }
 }
