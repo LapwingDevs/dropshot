@@ -6,5 +6,6 @@ export interface DropDetailsDto {
   description: string;
   startDateTime: string;
   endDateTime: string;
-  dropItems: DropItemDto[];
+  availableDropItems: DropItemDto[];
+  reservedDropItems: DropItemDto[];
 }

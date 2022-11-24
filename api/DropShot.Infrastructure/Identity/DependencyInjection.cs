@@ -1,4 +1,5 @@
 using DropShot.Application.Common;
+using DropShot.Application.Common.Abstraction;
 using DropShot.Infrastructure.DAL;
 using DropShot.Infrastructure.Identity.Helpers;
 using DropShot.Infrastructure.Identity.Models;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using IAuthenticationService = DropShot.Application.Common.Abstraction.IAuthenticationService;
 
 namespace DropShot.Infrastructure.Identity;
 
@@ -35,7 +37,7 @@ public static class DependencyInjection
         });
         services.Configure<AuthSettings>(configuration.GetSection("Authentication"));
         
-        services.AddTransient<Application.Common.IAuthenticationService, AuthenticationService>();
+        services.AddTransient<IAuthenticationService, AuthenticationService>();
         services.AddTransient<IIdentityService, IdentityService>();
         services.AddTransient<ITokenManager, TokenManager>();
         

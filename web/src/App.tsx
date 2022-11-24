@@ -14,6 +14,7 @@ import DropDetails from './routes/DropDetails/DropDetails';
 import Drops from './routes/Drops/Drops';
 import ErrorPage from './routes/ErrorPage/ErrorPage';
 import Login from './routes/Login/Login';
+import Order from './routes/Order/Order';
 import Register from './routes/Register/Register';
 import Root from './routes/Root/Root';
 
@@ -39,6 +40,7 @@ const App = () => {
         <Route path="/admin-panel/products-management/:productId" element={<Product />} />
         <Route path="/admin-panel/products-management/new" element={<AddNewProduct />} />
         <Route path="/account" element={<Account />} />
+        <Route path="/order" element={<Order />} />
         {/*  */}
         <Route path="*" element={<ErrorPage />} />
       </Routes>

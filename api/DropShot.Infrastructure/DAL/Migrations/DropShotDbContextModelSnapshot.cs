@@ -70,7 +70,8 @@ namespace DropShot.Infrastructure.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Carts");
                 });
@@ -141,6 +142,12 @@ namespace DropShot.Infrastructure.DAL.Migrations
 
                     b.Property<int>("DropId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text")
+                        .HasDefaultValue("Available");
 
                     b.Property<int>("VariantId")
                         .HasColumnType("integer");
@@ -654,8 +661,8 @@ namespace DropShot.Infrastructure.DAL.Migrations
             modelBuilder.Entity("DropShot.Domain.Entities.Cart", b =>
                 {
                     b.HasOne("DropShot.Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne("Cart")
+                        .HasForeignKey("DropShot.Domain.Entities.Cart", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -810,6 +817,9 @@ namespace DropShot.Infrastructure.DAL.Migrations
             modelBuilder.Entity("DropShot.Domain.Entities.User", b =>
                 {
                     b.Navigation("Address")
+                        .IsRequired();
+
+                    b.Navigation("Cart")
                         .IsRequired();
                 });
 

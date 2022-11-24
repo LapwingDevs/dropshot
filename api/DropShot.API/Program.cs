@@ -3,9 +3,9 @@ using DropShot.API.Middleware;
 using DropShot.API.Services;
 using DropShot.Application;
 using DropShot.Application.Common;
+using DropShot.Application.Common.Abstraction;
 using DropShot.Infrastructure;
-using DropShot.Infrastructure.Identity;
-using DropShot.Infrastructure.Identity.Helpers;
+using DropShot.Infrastructure.DAL;
 using Microsoft.OpenApi.Models;
 
 const string defaultCorsPolicy = "CorsPolicy";
@@ -53,14 +53,15 @@ builder.Services.AddCors(options =>
             corsPolicyBuilder
                 .WithOrigins(origins)
                 .AllowAnyHeader()
-                .AllowAnyMethod();
+                .AllowAnyMethod()
+                .AllowCredentials();;
         });
 });
 
 
 builder.Services
     .AddInfrastructure(builder.Configuration)
-    .AddApplication(builder.Configuration)
+    .AddApplication()
     .AddApplicationAuthentication(builder.Configuration);
 
 builder.Services.AddTransient<TokenManagerMiddleware>();
@@ -72,6 +73,15 @@ if (app.Environment.IsProduction() == false)
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    app.UseDeveloperExceptionPage();
+
+    using (var scope = app.Services.CreateScope())
+    {
+        var initializer = scope.ServiceProvider.GetRequiredService<DropShotDbContextInitializer>();
+        await initializer.InitDatabase();
+        await initializer.SeedDatabase();
+    }
 }
 
 app.UseCors(defaultCorsPolicy);
@@ -80,5 +90,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<TokenManagerMiddleware>();
 app.MapControllers();
+
+app.UseInfrastructure();
 
 app.Run();

@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using DropShot.Application.Common;
+using DropShot.Application.Common.Abstraction;
 
 namespace DropShot.API.Services;
 

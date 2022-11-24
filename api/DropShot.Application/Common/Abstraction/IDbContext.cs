@@ -1,7 +1,7 @@
 ﻿using DropShot.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace DropShot.Application.Common;
+namespace DropShot.Application.Common.Abstraction;
 
 public interface IDbContext
 {

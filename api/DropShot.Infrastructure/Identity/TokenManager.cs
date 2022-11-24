@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using DropShot.Application.Common;
+using DropShot.Application.Common.Abstraction;
 using DropShot.Infrastructure.Identity.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;

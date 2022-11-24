@@ -2,7 +2,8 @@ using AutoMapper;
 using DropShot.Application.Auth.Interfaces;
 using DropShot.Application.Auth.Models;
 using DropShot.Application.Common;
-using DropShot.Application.User.Interfaces;
+using DropShot.Application.Common.Abstraction;
+using DropShot.Application.Users.Interfaces;
 using DropShot.Application.Users.Models;
 using DropShot.Domain.Entities;
 

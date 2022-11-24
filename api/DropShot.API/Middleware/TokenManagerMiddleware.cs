@@ -1,5 +1,6 @@
 using System.Net;
 using DropShot.Application.Common;
+using DropShot.Application.Common.Abstraction;
 
 namespace DropShot.API.Middleware;
 
