@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using DropShot.Application.Common;
+using DropShot.Application.Common.Abstraction;
 using DropShot.Application.Products.Interfaces;
 using DropShot.Application.Products.Models;
 using DropShot.Domain.Entities;

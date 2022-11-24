@@ -1,4 +1,5 @@
 using DropShot.Application.Common;
+using DropShot.Application.Common.Abstraction;
 using MediatR;
 
 namespace DropShot.Application.Drops.Events.Handlers;

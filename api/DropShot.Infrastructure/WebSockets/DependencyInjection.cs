@@ -1,4 +1,5 @@
 ﻿using DropShot.Application.Common;
+using DropShot.Application.Common.Abstraction;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 

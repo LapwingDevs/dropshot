@@ -1,4 +1,5 @@
 using DropShot.Application.Common;
+using DropShot.Application.Common.Abstraction;
 
 namespace DropShot.Infrastructure.BackgroundServices.DeadlinesHandler.ExpiredDeadlinesCleaner;
 

@@ -1,4 +1,5 @@
 ﻿using DropShot.Application.Common;
+using DropShot.Application.Common.Abstraction;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

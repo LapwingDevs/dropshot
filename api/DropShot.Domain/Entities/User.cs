@@ -6,11 +6,8 @@ public class User
     public string Email { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
-
-
+    
+    public string ApplicationUserId { get; set; }
     public Address Address { get; set; }
-
-    public Guid ApplicationUserId { get; set; }
-
     public Cart Cart { get; set; }
 }

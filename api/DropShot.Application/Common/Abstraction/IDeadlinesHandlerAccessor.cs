@@ -1,6 +1,6 @@
 using DropShot.Domain.Entities;
 
-namespace DropShot.Application.Common;
+namespace DropShot.Application.Common.Abstraction;
 
 public interface IDeadlinesHandlerAccessor
 {
