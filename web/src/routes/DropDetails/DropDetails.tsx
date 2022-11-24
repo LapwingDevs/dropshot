@@ -9,11 +9,7 @@ import { DropItemDto } from '../../api/models/Drops/DropItemDto';
 import DropItemCard from '../../components/DropDetails/DropItemCard/DropItemCard';
 import { appDateFormat } from '../../constants/Dates';
 import { useCart } from '../../contexts/CartContext';
-import {
-  HubConnection,
-  HubConnectionBuilder,
-  LogLevel,
-} from '@microsoft/signalr';
+import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import data from '../../config.json';
 import './DropDetails.scss';
 
@@ -112,13 +108,27 @@ const DropDetails = () => {
           </div>
           <div className="description">{drop.description}</div>
 
+          <div>available</div>
           <div className="drop-items-wrapper">
-            {drop.dropItems.map((dropItem) => {
+            {drop.availableDropItems.map((dropItem) => {
               return (
                 <DropItemCard
                   key={dropItem.dropItemId}
                   dropItem={dropItem}
                   addItemToUserCart={() => addItemToUserCart(dropItem.dropItemId)}
+                />
+              );
+            })}
+          </div>
+          <div>reserved</div>
+          <div className="drop-items-wrapper">
+            {drop.reservedDropItems.map((dropItem) => {
+              return (
+                <DropItemCard
+                  key={dropItem.dropItemId}
+                  dropItem={dropItem}
+                  addItemToUserCart={() => addItemToUserCart(dropItem.dropItemId)}
+                  reserved={true}
                 />
               );
             })}

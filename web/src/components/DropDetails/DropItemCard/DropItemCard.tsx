@@ -6,14 +6,15 @@ import './DropItemCard.scss';
 interface DropItemProps {
   dropItem: DropItemDto;
   addItemToUserCart: () => void;
+  reserved?: boolean;
 }
 
-const DropItemCard = ({ dropItem, addItemToUserCart }: DropItemProps) => {
+const DropItemCard = ({ dropItem, addItemToUserCart, reserved = false }: DropItemProps) => {
   return (
     <Card className="drop-item-container">
       <div>{dropItem.productName}</div>
       <div>{dropItem.size}</div>
-      <Button onClick={addItemToUserCart}>Add to cart</Button>
+      {reserved === false && <Button onClick={addItemToUserCart}>Add to cart</Button>}
     </Card>
   );
 };

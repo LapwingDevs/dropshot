@@ -1,6 +1,7 @@
 export interface CartItemDto {
-    productName: string;
-    variantSize: number;
-    productPrice: number;
-    itemReservationEndDateTime: string;
+  productName: string;
+  variantSize: number;
+  variantId: number;
+  productPrice: number;
+  itemReservationEndDateTime: string;
 }
