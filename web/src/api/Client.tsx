@@ -6,4 +6,13 @@ export default axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
+});
+
+export const noAuthClient = axios.create({
+  baseURL: data.ApiUrl,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
 });
