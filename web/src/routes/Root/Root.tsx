@@ -1,26 +1,22 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { ping } from '../../api/controllers/MaintenanceClient';
 import { useNavigate } from 'react-router-dom';
 import './Root.scss';
+import AuthContext from '../../context/AuthContext';
 
 const Root = () => {
   // GET FROM STATE
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const { currentUser } = React.useContext(AuthContext);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    ping().then((res) => {
-      console.log(res);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (isAuthenticated) {
+    if (sessionStorage.getItem('token') === null) {
       navigate('/drops');
+    } else {
+      navigate('/login');
     }
-  }, [isAuthenticated, navigate]);
+  }, [navigate]);
 
   return <div>landing page</div>;
 };
