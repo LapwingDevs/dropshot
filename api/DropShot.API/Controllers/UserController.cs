@@ -1,5 +1,7 @@
 ﻿using DropShot.Application.Common;
 using DropShot.Application.Users.Interfaces;
+using DropShot.Application.Common.Abstraction;
+using DropShot.Application.Users.Interfaces;
 using DropShot.Application.Users.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

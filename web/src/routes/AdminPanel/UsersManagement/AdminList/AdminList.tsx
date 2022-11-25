@@ -3,7 +3,7 @@ import { getAdmins, promoteUser } from '../../../../api/controllers/AuthClient';
 import { UserDto } from '../../../../api/models/User/UserDto';
 import UserCard from '../../../../components/UserManagment/UserCard/UserCard';
 import { degradeUser } from '../../../../api/controllers/AuthClient';
-import AuthContext from '../../../../context/AuthContext';
+import AuthContext from '../../../../contexts/AuthContext';
 import { useSnackbar } from 'notistack';
 
 const AdminList = () => {

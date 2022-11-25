@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, RouterProvider, Routes } from 'react-router-dom';
 import TopBar from './components/Common/TopBar/TopBar';
 import Account from './routes/Account/Account';
@@ -14,9 +14,10 @@ import DropDetails from './routes/DropDetails/DropDetails';
 import Drops from './routes/Drops/Drops';
 import ErrorPage from './routes/ErrorPage/ErrorPage';
 import Login from './routes/Login/Login';
+import Order from './routes/Order/Order';
 import Register from './routes/Register/Register';
 import Root from './routes/Root/Root';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './routes/Auth/PrivateRoute';
 import AdminRoute from './routes/Auth/AdminRoute';
 import AddAdmin from './routes/AdminPanel/UsersManagement/AddAdmin/AddAdmin';
@@ -44,6 +45,7 @@ const App = () => {
               <Route path="/drops" element={<Drops />} />
               <Route path="/drops/:dropId" element={<DropDetails />} />
               <Route path="/account" element={<Account />} />
+              <Route path="/order" element={<Order />} />
             </Route>
             <Route element={<AdminRoute />}>
               <Route path="/admin-panel" element={<AdminPanel />} />

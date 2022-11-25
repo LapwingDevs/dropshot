@@ -1,4 +1,4 @@
-namespace DropShot.Application.Common;
+namespace DropShot.Application.Common.Abstraction;
 
 public interface ITokenManager
 {

@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using DropShot.Application.Common;
+using DropShot.Application.Common.Abstraction;
+using DropShot.Application.Drops.Events;
 using DropShot.Application.Drops.Interfaces;
 using DropShot.Application.Drops.Models;
 using DropShot.Domain.Entities;
 using DropShot.Domain.Enums;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace DropShot.Application.Drops;
@@ -15,17 +18,20 @@ public class DropsService : IDropsService
     private readonly IMapper _mapper;
     private readonly IAppDateTime _dateTime;
     private readonly IDropsListConverter _dropsListConverter;
+    private readonly IMediator _mediator;
 
     public DropsService(
         IDbContext dbContext,
         IMapper mapper,
         IAppDateTime dateTime,
-        IDropsListConverter dropsListConverter)
+        IDropsListConverter dropsListConverter,
+        IMediator mediator)
     {
         _dbContext = dbContext;
         _mapper = mapper;
         _dateTime = dateTime;
         _dropsListConverter = dropsListConverter;
+        _mediator = mediator;
     }
 
     public async Task<DropDetailsDto> GetDropDetails(int dropId)
@@ -53,15 +59,28 @@ public class DropsService : IDropsService
             Name = drop.Name,
             StartDateTime = drop.StartDateTime,
             EndDateTime = drop.EndDateTime,
-            DropItems = drop.DropItems.Select(x => new DropItemDto()
-            {
-                DropItemId = x.Id,
-                VariantId = x.VariantId,
-                ProductId = x.Variant.ProductId,
-                ProductName = x.Variant.Product.Name,
-                UnitOfSize = x.Variant.Product.UnitOfSize,
-                Size = x.Variant.Size
-            }).ToList()
+            AvailableDropItems = drop.DropItems
+                .Where(i => i.Status == DropItemStatus.Available)
+                .Select(x => new DropItemDto()
+                {
+                    DropItemId = x.Id,
+                    VariantId = x.VariantId,
+                    ProductId = x.Variant.ProductId,
+                    ProductName = x.Variant.Product.Name,
+                    UnitOfSize = x.Variant.Product.UnitOfSize,
+                    Size = x.Variant.Size
+                }).ToList(),
+            ReservedDropItems = drop.DropItems
+                .Where(i => i.Status == DropItemStatus.Reserved)
+                .Select(x => new DropItemDto()
+                {
+                    DropItemId = x.Id,
+                    VariantId = x.VariantId,
+                    ProductId = x.Variant.ProductId,
+                    ProductName = x.Variant.Product.Name,
+                    UnitOfSize = x.Variant.Product.UnitOfSize,
+                    Size = x.Variant.Size
+                }).ToList()
         };
     }
 
@@ -111,6 +130,8 @@ public class DropsService : IDropsService
         await SetVariantsStatusAsInDrop(request);
 
         await _dbContext.SaveChangesAsync(CancellationToken.None);
+
+        await _mediator.Publish(new DropIsCreatedEvent(drop));
     }
 
     private async Task SetVariantsStatusAsInDrop(AddDropRequest request)

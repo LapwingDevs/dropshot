@@ -3,6 +3,8 @@ using System.Text.RegularExpressions;
 using AutoMapper;
 using DropShot.Application.Common;
 using DropShot.Application.Users.Interfaces;
+using DropShot.Application.Common.Abstraction;
+using DropShot.Application.Users.Interfaces;
 using DropShot.Application.Users.Models;
 using DropShot.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +40,7 @@ public class UserService : IUserService
     public async Task<UserDto> UpdateUser(UpdateUserDto updateUserDto)
     {
         var user = _mapper.Map<Domain.Entities.User>(updateUserDto);
-        
+
         var existingUser = await _dbContext.Users.FindAsync(updateUserDto.Id);
         if (existingUser == null)
         {
@@ -46,10 +48,10 @@ public class UserService : IUserService
         }
 
         _mapper.Map(updateUserDto, existingUser);
-        
+
         await _dbContext.SaveChangesAsync(new CancellationToken());
 
-        
+
 
         return _mapper.Map<UserDto>(existingUser);
     }
@@ -95,7 +97,7 @@ public class UserService : IUserService
             usersByUserName = usersByUserName.Where(u => !result.admins.Contains(u.ApplicationUserId)).ToList();
             usersByUserEmail = usersByUserEmail.Where(u => !result.admins.Contains(u.ApplicationUserId)).ToList();
         }
-        
+
         var users = new List<UserDto>();
             
         users.AddRange(_mapper.Map<List<User>, List<UserDto>>(usersByUserEmail));

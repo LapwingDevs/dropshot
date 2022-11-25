@@ -4,7 +4,7 @@ namespace DropShot.Application.Carts.Interfaces;
 
 public interface ICartService
 {
-    Task<UserCartDto> GetUserCart(int userId);
+    Task<UserCartDto> GetUserCartWithItems(string applicationUserId);
 
     Task AddDropItemToUserCart(AddDropItemToUserCartRequest request);
 }

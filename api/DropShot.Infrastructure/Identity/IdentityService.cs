@@ -1,5 +1,6 @@
 using DropShot.Application.Auth.Models;
 using DropShot.Application.Common;
+using DropShot.Application.Common.Abstraction;
 using DropShot.Infrastructure.Identity.Extensions;
 using DropShot.Infrastructure.Identity.Models;
 

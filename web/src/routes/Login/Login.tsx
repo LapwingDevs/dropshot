@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { passwordRegex } from '../../constants/Regexes';
-import AuthContext from '../../context/AuthContext';
+import AuthContext from '../../contexts/AuthContext';
 import { useSnackbar } from 'notistack';
 
 const validationSchema = yup.object({

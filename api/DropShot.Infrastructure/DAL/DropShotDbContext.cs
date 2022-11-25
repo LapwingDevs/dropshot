@@ -1,4 +1,5 @@
 ﻿using DropShot.Application.Common;
+using DropShot.Application.Common.Abstraction;
 using DropShot.Domain.Entities;
 using DropShot.Infrastructure.Identity;
 using DropShot.Infrastructure.Identity.Models;

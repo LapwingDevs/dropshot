@@ -3,7 +3,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import './MenuModal.scss';
-import AuthContext from '../../../context/AuthContext';
+import AuthContext from '../../../contexts/AuthContext';
 import { Admin } from '../../../constants/UserRole';
 
 interface MenuModalProps {

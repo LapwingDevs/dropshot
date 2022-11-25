@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Root.scss';
-import AuthContext from '../../context/AuthContext';
+import AuthContext from '../../contexts/AuthContext';
 
 const Root = () => {
   // GET FROM STATE

@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 import { register } from '../../api/controllers/AuthClient';
-import AuthContext from '../../context/AuthContext';
+import AuthContext from '../../contexts/AuthContext';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
 

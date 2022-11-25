@@ -1,6 +1,6 @@
 using DropShot.Application.Auth.Models;
 
-namespace DropShot.Application.Common;
+namespace DropShot.Application.Common.Abstraction;
 
 public interface IAuthenticationService
 {

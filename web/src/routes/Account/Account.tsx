@@ -1,5 +1,5 @@
 import React, { useContext, useMemo, useState } from 'react';
-import AuthContext from '../../context/AuthContext';
+import AuthContext from '../../contexts/AuthContext';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import * as yup from 'yup';
@@ -7,7 +7,6 @@ import { onlyLetters } from '../../constants/Regexes';
 import { Button, TextField } from '@mui/material';
 import { updateUser } from '../../api/controllers/UserClient';
 import { useSnackbar } from 'notistack';
-import ConfirmationDialog from '../../components/Common/ConfirmationDialog/ConfirmationDialog';
 
 const validationSchema = yup.object({
   firstName: yup

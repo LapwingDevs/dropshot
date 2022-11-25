@@ -7,7 +7,7 @@ public class Order
     public decimal ShippingCost { get; set; }
     public bool IsPaid { get; set; }
 
-    private ICollection<OrderItem> OrderItems { get; set; }
+    public ICollection<OrderItem> OrderItems { get; set; }
 
     public User User { get; set; }
     public int UserId { get; set; }

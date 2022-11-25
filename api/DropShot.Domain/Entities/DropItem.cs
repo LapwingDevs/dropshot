@@ -1,9 +1,12 @@
-﻿namespace DropShot.Domain.Entities;
+﻿using DropShot.Domain.Enums;
+
+namespace DropShot.Domain.Entities;
 
 public class DropItem
 {
     public int Id { get; set; }
-    // public int Quantity { get; set; }
+
+    public DropItemStatus Status { get; set; }
 
     public Drop Drop { get; set; }
     public int DropId { get; set; }
