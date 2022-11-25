@@ -53,7 +53,8 @@ builder.Services.AddCors(options =>
             corsPolicyBuilder
                 .WithOrigins(origins)
                 .AllowAnyHeader()
-                .AllowAnyMethod();
+                .AllowAnyMethod()
+                .AllowCredentials();
         });
 });
 
