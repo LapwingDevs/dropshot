@@ -1,5 +1,6 @@
 ﻿using DropShot.Application.Products.Interfaces;
 using DropShot.Application.Products.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DropShot.API.Controllers;
@@ -16,18 +17,21 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<IEnumerable<ProductOnListDto>> GetProducts()
     {
         return await _productsService.GetProducts();
     }
     
     [HttpGet("{productId}")]
+    [Authorize]
     public async Task<ProductDetailsDto> GetProducts(int productId)
     {
         return await _productsService.GetProductById(productId);
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task AddProduct(AddProductRequest request)
     {
         await _productsService.AddProduct(request);
