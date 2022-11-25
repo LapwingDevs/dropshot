@@ -4,10 +4,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import './TopBar.scss';
 import CartModal from '../CartModal/CartModal';
 import MenuModal from '../MenuModal/MenuModal';
+import AuthContext from '../../../context/AuthContext';
 
 const TopBar = () => {
   const [cartIsOpen, setCartIsOpen] = useState<boolean>(false);
   const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
+  const { currentUser } = React.useContext(AuthContext);
+
   const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -23,19 +26,16 @@ const TopBar = () => {
             DropShot
           </Typography>
 
-          <Button color="secondary" onClick={() => setCartIsOpen(true)}>
-            Cart
-          </Button>
-          <Button color="secondary" onClick={() => setMenuIsOpen(true)}>
-            Menu
-          </Button>
-
-          <Button onClick={() => navigate('/login')} color="secondary">
-            Login
-          </Button>
-          <Button onClick={() => navigate('/register')} color="secondary">
-            Register
-          </Button>
+          {currentUser && (
+            <>
+              <Button color="secondary" onClick={() => setCartIsOpen(true)}>
+                Cart
+              </Button>
+              <Button color="secondary" onClick={() => setMenuIsOpen(true)}>
+                Menu
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
       <CartModal isOpen={cartIsOpen} handleClose={() => setCartIsOpen(false)} />

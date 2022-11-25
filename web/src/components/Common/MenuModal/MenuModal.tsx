@@ -3,6 +3,8 @@ import React from 'react';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import './MenuModal.scss';
+import AuthContext from '../../../context/AuthContext';
+import { Admin } from '../../../constants/UserRole';
 
 interface MenuModalProps {
   isOpen: boolean;
@@ -10,10 +12,17 @@ interface MenuModalProps {
 }
 
 const MenuModal = ({ isOpen, handleClose }: MenuModalProps) => {
+  const { signOut, userRole } = React.useContext(AuthContext);
+
   const navigate = useNavigate();
 
   const navigateToMenuItem = (path: string) => {
     navigate(path);
+    handleClose();
+  };
+
+  const logOut = () => {
+    signOut();
     handleClose();
   };
 
@@ -26,9 +35,11 @@ const MenuModal = ({ isOpen, handleClose }: MenuModalProps) => {
     >
       <div>
         <div>
-          <Button onClick={() => navigateToMenuItem('/admin-panel')} color="secondary">
-            Admin panel
-          </Button>
+          {userRole === Admin && (
+            <Button onClick={() => navigateToMenuItem('/admin-panel')} color="secondary">
+              Admin panel
+            </Button>
+          )}
         </div>
         <div>
           <Button onClick={() => navigateToMenuItem('/account')} color="secondary">
@@ -36,7 +47,7 @@ const MenuModal = ({ isOpen, handleClose }: MenuModalProps) => {
           </Button>
         </div>
         <div>
-          <Button onClick={() => navigateToMenuItem('/login')} color="secondary">
+          <Button onClick={() => logOut()} color="secondary">
             Logout
           </Button>
         </div>
