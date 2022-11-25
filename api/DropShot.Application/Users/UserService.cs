@@ -34,6 +34,25 @@ public class UserService : IUserService
         return _mapper.Map<UserDto>(user);
     }
 
+    public async Task<UserDto> UpdateUser(UpdateUserDto updateUserDto)
+    {
+        var user = _mapper.Map<Domain.Entities.User>(updateUserDto);
+        
+        var existingUser = await _dbContext.Users.FindAsync(updateUserDto.Id);
+        if (existingUser == null)
+        {
+            throw new ArgumentException($"User with id {updateUserDto.Id} not found!");
+        }
+
+        _mapper.Map(updateUserDto, existingUser);
+        
+        await _dbContext.SaveChangesAsync(new CancellationToken());
+
+        
+
+        return _mapper.Map<UserDto>(existingUser);
+    }
+
     public async Task<UserDto> GetUser(Expression<Func<Domain.Entities.User,bool>> predicate)
     {
         var user = await _dbContext.Users

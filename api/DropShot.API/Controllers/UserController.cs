@@ -28,6 +28,13 @@ public class UserController : ControllerBase
         return await _userService.GetUser(u => u.ApplicationUserId == _currentUserService.UserId);
     }
 
+    [HttpPut]
+    [Authorize]
+    public async Task<UserDto> UpdateUser(UpdateUserDto updateUserDto)
+    {
+        return await _userService.UpdateUser(updateUserDto);
+    }
+
     [HttpGet("users")]
     [Authorize(Roles = "Admin")]
     public async Task<UserVm> FindUsers(string term)
