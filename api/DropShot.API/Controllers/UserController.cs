@@ -1,5 +1,5 @@
 ﻿using DropShot.Application.Common;
-using DropShot.Application.User.Interfaces;
+using DropShot.Application.Users.Interfaces;
 using DropShot.Application.Users.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -37,9 +37,9 @@ public class UserController : ControllerBase
 
     [HttpGet("users")]
     [Authorize(Roles = "Admin")]
-    public async Task<UserVm> FindUsers(string term)
+    public async Task<UserVm> FindUsers(string term, bool usersOnly = false)
     {
-        return await _userService.FindUsers(term);
+        return await _userService.FindUsers(term, usersOnly);
     }
 
 }

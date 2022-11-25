@@ -5,9 +5,8 @@ using DropShot.Application.Drops;
 using DropShot.Application.Drops.Interfaces;
 using DropShot.Application.Products;
 using DropShot.Application.Products.Interfaces;
-using DropShot.Application.User;
-using DropShot.Application.User.Interfaces;
 using DropShot.Application.Users;
+using DropShot.Application.Users.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
