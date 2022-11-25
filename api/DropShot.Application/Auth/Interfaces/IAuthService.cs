@@ -8,12 +8,12 @@ public interface IAuthService
     Task<RegisterResponseDto> RegisterUser(RegisterUserDto registerUserDto);
     
     Task<Result> ChangePassword(ChangePasswordRequest changePasswordRequest);
-    
-    Task<LoginUserResponse> LoginUser(LoginUserRequest loginUserRequest);
+
+    Task<(LoginUserResponse response, string refreshToken)> LoginUser(LoginUserRequest loginUserRequest);
     
     Task<Result> LogoutUser(string email);
 
-    Task<JWTAuthorizationResult> RefreshToken(string token);
+    Task<(JWTAuthorizationResult result, string refreshToken)> RefreshToken(string token);
     
     Task<IEnumerable<UserDto>> GetAdmins();
 

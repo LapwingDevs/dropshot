@@ -1,3 +1,4 @@
+using DropShot.API.Extensions;
 using DropShot.Application.Auth.Interfaces;
 using DropShot.Application.Auth.Models;
 using DropShot.Application.Users.Models;
@@ -33,7 +34,11 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<LoginUserResponse> LoginUser(LoginUserRequest loginUserRequest)
     {
-        return await _authService.LoginUser(loginUserRequest);
+        var result = await _authService.LoginUser(loginUserRequest);
+
+        Response.AddRefreshTokenCookie(result.refreshToken);
+
+        return result.response;
     }
 
     [HttpPost("logout/{email}")]
@@ -43,10 +48,19 @@ public class AuthController : ControllerBase
         return await _authService.LogoutUser(email);
     }
 
-    [HttpPost("refreshToken/{token}")]
-    public async Task<JWTAuthorizationResult> RefreshToken(string token)
+    [HttpPost("refreshToken")]
+    public async Task<IActionResult> RefreshToken()
     {
-        return await _authService.RefreshToken(token);
+        if (!Request.Cookies.TryGetValue("X-Refresh-Token", out var refreshToken))
+        {
+            return BadRequest();
+        }
+        
+        var result = await _authService.RefreshToken(refreshToken);
+        
+        Response.AddRefreshTokenCookie(result.refreshToken);
+
+        return Ok(result.result);
     }
 
     [HttpPost("promote/{email}")]

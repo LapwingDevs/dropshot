@@ -1,4 +1,5 @@
 ﻿using DropShot.Application.Common;
+using DropShot.Application.Users.Interfaces;
 using DropShot.Application.Common.Abstraction;
 using DropShot.Application.Users.Interfaces;
 using DropShot.Application.Users.Models;
@@ -29,11 +30,18 @@ public class UserController : ControllerBase
         return await _userService.GetUser(u => u.ApplicationUserId == _currentUserService.UserId);
     }
 
+    [HttpPut]
+    [Authorize]
+    public async Task<UserDto> UpdateUser(UpdateUserDto updateUserDto)
+    {
+        return await _userService.UpdateUser(updateUserDto);
+    }
+
     [HttpGet("users")]
     [Authorize(Roles = "Admin")]
-    public async Task<UserVm> FindUsers(string term)
+    public async Task<UserVm> FindUsers(string term, bool usersOnly = false)
     {
-        return await _userService.FindUsers(term);
+        return await _userService.FindUsers(term, usersOnly);
     }
 
 }

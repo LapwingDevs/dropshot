@@ -1,5 +1,7 @@
 ﻿using DropShot.Application.Carts.Interfaces;
 using DropShot.Application.Carts.Models;
+using DropShot.Application.Common.Abstraction;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DropShot.API.Controllers;
@@ -9,20 +11,23 @@ namespace DropShot.API.Controllers;
 public class CartsController : ControllerBase
 {
     private readonly ICartService _cartService;
+    private readonly ICurrentUserService _currentUserService;
 
-    public CartsController(ICartService cartService)
+    public CartsController(ICartService cartService, ICurrentUserService currentUserService)
     {
         _cartService = cartService;
+        _currentUserService = currentUserService;
     }
 
     [HttpGet]
+    [Authorize]
     public Task<UserCartDto> GetUserCart()
     {
-        const int userId = 1;
-        return _cartService.GetUserCartWithItems(userId);
+        return _cartService.GetUserCartWithItems(_currentUserService.UserId);
     }
 
     [HttpPost]
+    [Authorize]
     public async Task AddDropItemToUserCart(AddDropItemToUserCartRequest request)
     {
         await _cartService.AddDropItemToUserCart(request);

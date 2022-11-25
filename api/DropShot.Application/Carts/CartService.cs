@@ -3,6 +3,7 @@ using DropShot.Application.Carts.Interfaces;
 using DropShot.Application.Carts.Models;
 using DropShot.Application.Common;
 using DropShot.Application.Common.Abstraction;
+using DropShot.Application.Users.Interfaces;
 using DropShot.Domain.Constants;
 using DropShot.Domain.Entities;
 using DropShot.Domain.Enums;
@@ -13,20 +14,22 @@ namespace DropShot.Application.Carts;
 
 public class CartService : ICartService
 {
+    private readonly IUserService _userService;
     private readonly IDbContext _dbContext;
     private readonly IAppDateTime _appDateTime;
     private readonly IMediator _mediator;
 
-    public CartService(IDbContext dbContext, IAppDateTime appDateTime, IMediator mediator)
+    public CartService(IDbContext dbContext, IAppDateTime appDateTime, IMediator mediator, IUserService userService)
     {
         _dbContext = dbContext;
         _appDateTime = appDateTime;
         _mediator = mediator;
+        _userService = userService;
     }
 
-    public async Task<UserCartDto> GetUserCartWithItems(int userId)
+    public async Task<UserCartDto> GetUserCartWithItems(string applicationUserId)
     {
-        var userCart = await GetUserCart(userId);
+        var userCart = await GetUserCart(applicationUserId);
 
         var cartItems = await _dbContext.CartItems
             .Include(cartItem => cartItem.DropItem)
@@ -62,12 +65,14 @@ public class CartService : ICartService
         await _mediator.Publish(new CartItemIsAddedEvent(cartItem));
     }
 
-    private async Task<Cart> GetUserCart(int userId)
+    private async Task<Cart> GetUserCart(string applicationUserId)
     {
-        var userCart = await _dbContext.Carts.SingleOrDefaultAsync(c => c.UserId == userId);
+        var user = _userService.GetUser(u => u.ApplicationUserId == applicationUserId);
+
+        var userCart = await _dbContext.Carts.SingleOrDefaultAsync(c => c.UserId == user.Id);
         if (userCart is null)
         {
-            return await CreateUserCart(userId);
+            return await CreateUserCart(user.Id);
         }
 
         return userCart;

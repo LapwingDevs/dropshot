@@ -2,6 +2,7 @@ using AutoMapper;
 using DropShot.Application.Auth.Interfaces;
 using DropShot.Application.Auth.Models;
 using DropShot.Application.Common;
+using DropShot.Application.Users.Interfaces;
 using DropShot.Application.Common.Abstraction;
 using DropShot.Application.Users.Interfaces;
 using DropShot.Application.Users.Models;
@@ -65,20 +66,20 @@ public class AuthService : IAuthService
         };
     }
 
-    public async Task<LoginUserResponse> LoginUser(LoginUserRequest loginUserRequest)
+    public async Task<(LoginUserResponse response, string refreshToken)> LoginUser(LoginUserRequest loginUserRequest)
     {
-        var (result, appUserId) =
+        var (result, refreshToken, appUserId) =
             await _authenticationService.LoginUser(loginUserRequest.Email, loginUserRequest.Password);
 
         if (!result.Succeeded)
         {
-            return new LoginUserResponse {Token = "", RefreshToken = "", Errors = result.Errors};
+            return (new LoginUserResponse {Token = "", Errors = result.Errors}, "");
         }
 
         var user = await _userService.GetUser(u => u.ApplicationUserId == appUserId);
 
-        return new LoginUserResponse
-            {Token = result.Token, RefreshToken = result.RefreshToken, User = user, Errors = result.Errors};
+        return (new LoginUserResponse
+            {Token = result.Token,  User = user, Errors = result.Errors}, refreshToken);
     }
 
     public async Task<Result> LogoutUser(string email)
@@ -93,9 +94,10 @@ public class AuthService : IAuthService
         return result;
     }
 
-    public async Task<JWTAuthorizationResult> RefreshToken(string token)
+    public async Task<(JWTAuthorizationResult result, string refreshToken)> RefreshToken(string token)
     {
-        return await _authenticationService.RefreshToken(token);
+        var (result, refreshToken) = await _authenticationService.RefreshToken(token);
+        return (result, refreshToken);
     }
 
     public async Task<Result> ChangePassword(ChangePasswordRequest changePasswordRequest)
