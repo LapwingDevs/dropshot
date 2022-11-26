@@ -67,7 +67,7 @@ public class CartService : ICartService
 
     private async Task<Cart> GetUserCart(string applicationUserId)
     {
-        var user = _userService.GetUser(u => u.ApplicationUserId == applicationUserId);
+        var user = await _userService.GetUser(u => u.ApplicationUserId == applicationUserId);
 
         var userCart = await _dbContext.Carts.SingleOrDefaultAsync(c => c.UserId == user.Id);
         if (userCart is null)
