@@ -1,8 +1,8 @@
-﻿using DropShot.Application.Common;
-using DropShot.Application.Common.Abstraction;
+﻿using DropShot.Application.Common.Abstraction;
 using DropShot.Application.Orders.Interfaces;
 using DropShot.Application.Orders.Models;
 using DropShot.Application.Users;
+using DropShot.Application.Users.Interfaces;
 using DropShot.Domain.Entities;
 using DropShot.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -11,12 +11,13 @@ namespace DropShot.Application.Orders;
 
 public class OrdersService : IOrdersService
 {
-    private readonly UserService _userService;
+    private readonly IUserService _userService;
     private readonly IDbContext _dbContext;
 
-    public OrdersService(IDbContext dbContext)
+    public OrdersService(IDbContext dbContext, IUserService userService)
     {
         _dbContext = dbContext;
+        _userService = userService;
     }
 
     public async Task SubmitOrder(string applicationUserId, SubmitOrderRequest request)
