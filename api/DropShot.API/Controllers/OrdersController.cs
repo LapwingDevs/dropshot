@@ -20,17 +20,19 @@ public class OrdersController : ControllerBase
         _currentUserService = currentUserService;
     }
 
-    [HttpPost("submit")]
+    [HttpPost("submit")]    
     [Authorize]
-    public async Task SubmitOrder(SubmitOrderRequest request)
+    public async Task<ActionResult<int>> SubmitOrder(SubmitOrderRequest request)
     {
-        await _ordersService.SubmitOrder(_currentUserService.UserId, request);
+        var orderId = await _ordersService.SubmitOrder(_currentUserService.UserId, request);
+        return Ok(orderId);
     }
 
     [HttpPost("paid")]
     [Authorize]
-    public async Task SetOrderAsPaid(int orderId)
+    public async Task<ActionResult> SetOrderAsPaid(int orderId)
     {
         await _ordersService.SetOrderAsPaid(orderId);
+        return Ok();
     }
 }

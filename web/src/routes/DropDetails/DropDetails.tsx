@@ -107,7 +107,6 @@ const DropDetails = () => {
             {format(new Date(drop.startDateTime), appDateFormat)} - {format(new Date(drop.endDateTime), appDateFormat)}
           </div>
           <div className="description">{drop.description}</div>
-
           <div>available</div>
           <div className="drop-items-wrapper">
             {drop.availableDropItems.map((dropItem) => {
@@ -116,23 +115,28 @@ const DropDetails = () => {
                   key={dropItem.dropItemId}
                   dropItem={dropItem}
                   addItemToUserCart={() => addItemToUserCart(dropItem.dropItemId)}
+                  addToCardImpossible={new Date(drop.startDateTime).getTime() > new Date().getTime()}
                 />
               );
             })}
           </div>
-          <div>reserved</div>
-          <div className="drop-items-wrapper">
-            {drop.reservedDropItems.map((dropItem) => {
-              return (
-                <DropItemCard
-                  key={dropItem.dropItemId}
-                  dropItem={dropItem}
-                  addItemToUserCart={() => addItemToUserCart(dropItem.dropItemId)}
-                  reserved={true}
-                />
-              );
-            })}
-          </div>
+          {new Date(drop.startDateTime).getTime() < new Date().getTime() && (
+            <div>
+              <div>reserved</div>
+              <div className="drop-items-wrapper">
+                {drop.reservedDropItems.map((dropItem) => {
+                  return (
+                    <DropItemCard
+                      key={dropItem.dropItemId}
+                      dropItem={dropItem}
+                      addItemToUserCart={() => addItemToUserCart(dropItem.dropItemId)}
+                      addToCardImpossible={true}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       );
     }
