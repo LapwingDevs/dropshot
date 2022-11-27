@@ -3,6 +3,7 @@ using DropShot.Application.Common.Abstraction;
 using DropShot.Infrastructure.AppDateTime;
 using DropShot.Infrastructure.BackgroundServices.DeadlinesHandler.Extensions;
 using DropShot.Infrastructure.DAL;
+using DropShot.Infrastructure.DAL.Helpers;
 using DropShot.Infrastructure.WebSockets;
 using DropShot.Infrastructure.Identity;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +16,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        services.Configure<DefaultAdmin>(configuration.GetSection("DefaultAdmin"));
+        
         services.AddPostgres(configuration);
 
         services.AddDeadlinesHandler();
