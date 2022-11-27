@@ -9,10 +9,10 @@ namespace DropShot.API.Controllers;
 public class MaintenanceController : ControllerBase
 {
     [HttpGet("ping")]
-    [Authorize(Roles = "User")]
+    // [Authorize(Roles = "User")]
     public string Ping() => "pong";
     
     [HttpGet("sring")]
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     public string Sring() => "srong";
 }

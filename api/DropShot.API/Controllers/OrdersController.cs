@@ -17,15 +17,27 @@ public class OrdersController : ControllerBase
     }
 
     [HttpPost("submit")]
-    public async Task SubmitOrder(SubmitOrderRequest request)
+    public async Task<ActionResult<int>> SubmitOrder(SubmitOrderRequest request)
     {
-        const int userId = 1;
-        await _ordersService.SubmitOrder(userId, request);
+        try
+        {
+            const int userId = 1;
+            var orderId = await _ordersService.SubmitOrder(userId, request);
+        
+            return Ok(orderId);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
+        }
     }
 
-    [HttpPost("paid")]
-    public async Task SetOrderAsPaid(int orderId)
+    [HttpPost("paid/{orderId}")]
+    public async Task<ActionResult> SetOrderAsPaid(int orderId)
     {
         await _ordersService.SetOrderAsPaid(orderId);
+
+        return Ok();
     }
 }

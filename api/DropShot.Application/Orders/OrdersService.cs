@@ -17,7 +17,7 @@ public class OrdersService : IOrdersService
         _dbContext = dbContext;
     }
 
-    public async Task SubmitOrder(int userId, SubmitOrderRequest request)
+    public async Task<int> SubmitOrder(int userId, SubmitOrderRequest request)
     {
         var orderItems = request.CartItems.Select(i => new OrderItem()
         {
@@ -36,9 +36,13 @@ public class OrdersService : IOrdersService
 
         await _dbContext.Orders.AddAsync(newOrder);
 
-        await SetDropItemsStatusAsOrdered(orderItems.Select(oi => oi.VariantId));
+
+        var variantsIds = orderItems.Select(oi => oi.VariantId).ToList();
+        await SetDropItemsStatusAsOrdered(variantsIds);
 
         await _dbContext.SaveChangesAsync(CancellationToken.None);
+
+        return newOrder.Id;
     }
 
     public async Task SetOrderAsPaid(int orderId)
@@ -60,7 +64,7 @@ public class OrdersService : IOrdersService
             .Where(i => variantIds.Contains(i.VariantId))
             .ToListAsync();
 
-        // TODO: n+1?
+        // TODO: n+1
         foreach (var dropItem in dropItems)
         {
             dropItem.Status = DropItemStatus.Ordered;
