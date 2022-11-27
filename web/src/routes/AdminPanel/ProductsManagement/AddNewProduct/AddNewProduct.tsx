@@ -1,10 +1,11 @@
-import { Button, MenuItem, Select, TextField } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { addProduct } from '../../../../api/controllers/ProductsClient';
 import { AddProductRequest } from '../../../../api/models/Products/AddProductRequest';
 import { ClothesUnitOfMeasure } from '../../../../api/models/Products/ClothesUnitOfMeasure';
+import './AddNewProduct.scss';
 
 interface IFormData {
   name: string;
@@ -56,9 +57,11 @@ const AddNewProduct = () => {
   };
 
   return (
-    <div>
+    <div className="add-new-product-container">
       <form>
-        <div>
+        <div className="field">Add new product</div>
+
+        <div className="field">
           <Controller
             name={'name'}
             control={control}
@@ -66,15 +69,17 @@ const AddNewProduct = () => {
           />
         </div>
 
-        <div>
+        <div className="field">
           <Controller
             name={'description'}
             control={control}
-            render={({ field: { onChange, value } }) => <TextField onChange={onChange} value={value} label={'desc'} />}
+            render={({ field: { onChange, value } }) => (
+              <TextField onChange={onChange} value={value} label={'description'} />
+            )}
           />
         </div>
 
-        <div>
+        <div className="field">
           <Controller
             name={'price'}
             control={control}
@@ -84,21 +89,26 @@ const AddNewProduct = () => {
           />
         </div>
 
-        <div>
+        <div className="field">
           <Controller
             control={control}
             name={'unitOfSize'}
             render={({ field: { onChange, value } }) => (
-              <Select onChange={onChange} value={value}>
-                {generateSelectOptions()}
-              </Select>
+              <FormControl>
+                <InputLabel>Unit of size</InputLabel>
+                <Select onChange={onChange} value={value} style={{ width: '223px' }}>
+                  {generateSelectOptions()}
+                </Select>
+              </FormControl>
             )}
           />
         </div>
 
-        <div>
-          <Button onClick={handleSubmit((data) => onSubmit(data))}>Submit</Button>
-          <Button onClick={() => reset()} variant={'outlined'}>
+        <div className="field">
+          <Button onClick={handleSubmit((data) => onSubmit(data))} variant={'outlined'} style={{ color: 'black' }}>
+            Submit
+          </Button>
+          <Button onClick={() => reset()} variant={'outlined'} style={{ color: 'black' }}>
             Reset
           </Button>
         </div>

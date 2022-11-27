@@ -14,7 +14,11 @@ const DropItemCard = ({ dropItem, addItemToUserCart, addToCardImpossible = false
     <Card className="drop-item-container">
       <div>{dropItem.productName}</div>
       <div>{dropItem.size}</div>
-      {addToCardImpossible === false && <Button onClick={addItemToUserCart}>Add to cart</Button>}
+      {addToCardImpossible === false && (
+        <Button onClick={addItemToUserCart} style={{ color: 'black' }}>
+          Add to cart
+        </Button>
+      )}
     </Card>
   );
 };

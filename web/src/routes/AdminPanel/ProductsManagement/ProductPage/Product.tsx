@@ -72,7 +72,13 @@ const Product = () => {
               <div key={variant.id}>
                 <span>variant: {variant.size}</span>
                 <span>
-                  <Button onClick={() => remove(variant.id)}>Remove</Button>
+                  <Button
+                    onClick={() => remove(variant.id)}
+                    variant={'outlined'}
+                    style={{ color: 'black', marginLeft: '5px' }}
+                  >
+                    Remove
+                  </Button>
                 </span>
               </div>
             );
@@ -95,7 +101,13 @@ const Product = () => {
         </span>
 
         <span>
-          <Button onClick={handleSubmit((data) => addVariant(data))}>Submit</Button>
+          <Button
+            onClick={handleSubmit((data) => addVariant(data))}
+            variant={'outlined'}
+            style={{ color: 'black', marginLeft: '5px' }}
+          >
+            Submit
+          </Button>
         </span>
       </form>
     </div>
