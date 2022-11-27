@@ -5,6 +5,8 @@ using DropShot.Application;
 using DropShot.Application.Common;
 using DropShot.Application.Common.Abstraction;
 using DropShot.Infrastructure;
+using DropShot.Infrastructure.Identity;
+using DropShot.Infrastructure.Identity.Helpers;
 using DropShot.Infrastructure.DAL;
 using Microsoft.OpenApi.Models;
 
@@ -54,7 +56,7 @@ builder.Services.AddCors(options =>
                 .WithOrigins(origins)
                 .AllowAnyHeader()
                 .AllowAnyMethod()
-                .AllowCredentials();;
+                .AllowCredentials();
         });
 });
 

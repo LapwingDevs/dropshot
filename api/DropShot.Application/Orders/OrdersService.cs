@@ -1,7 +1,8 @@
-﻿using DropShot.Application.Common;
-using DropShot.Application.Common.Abstraction;
+﻿using DropShot.Application.Common.Abstraction;
 using DropShot.Application.Orders.Interfaces;
 using DropShot.Application.Orders.Models;
+using DropShot.Application.Users;
+using DropShot.Application.Users.Interfaces;
 using DropShot.Domain.Entities;
 using DropShot.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -10,15 +11,19 @@ namespace DropShot.Application.Orders;
 
 public class OrdersService : IOrdersService
 {
+    private readonly IUserService _userService;
     private readonly IDbContext _dbContext;
 
-    public OrdersService(IDbContext dbContext)
+    public OrdersService(IDbContext dbContext, IUserService userService)
     {
         _dbContext = dbContext;
+        _userService = userService;
     }
 
-    public async Task<int> SubmitOrder(int userId, SubmitOrderRequest request)
+    public async Task<int> SubmitOrder(string applicationUserId, SubmitOrderRequest request)
     {
+        var user = await _userService.GetUser(u => u.ApplicationUserId == applicationUserId);
+        
         var orderItems = request.CartItems.Select(i => new OrderItem()
         {
             Price = i.ProductPrice,
@@ -30,7 +35,7 @@ public class OrdersService : IOrdersService
             TotalPrice = Convert.ToDecimal(request.TotalPrice),
             ShippingCost = Convert.ToDecimal(request.ShippingCost),
             IsPaid = false,
-            UserId = userId,
+            UserId = user.Id,
             OrderItems = orderItems,
         };
 

@@ -6,6 +6,7 @@ namespace DropShot.Application.Users.Interfaces;
 public interface IUserService
 {
     Task<UserDto> CreateUser(CreateUserRequest createUserRequest);
+    Task<UserDto> UpdateUser(UpdateUserDto updateUserDto);
     Task<UserDto> GetUser(Expression<Func<Domain.Entities.User, bool>> predicate);
-    Task<UserVm> FindUsers(string term);
+    Task<UserVm> FindUsers(string term, bool usersOnly);
 }

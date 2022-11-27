@@ -32,18 +32,18 @@ public class AuthenticationService : IAuthenticationService
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<(JWTAuthorizationResult Result, string userId)> LoginUser(string email, string password)
+    public async Task<(JWTAuthorizationResult Result, string refreshToken, string userId)> LoginUser(string email, string password)
     {
         var user = await _userManager.FindByEmailAsync(email);
 
         if (user == null)
-            return (JWTAuthorizationResult.Failure(new[] {"Email not found"}), "");
+            return (JWTAuthorizationResult.Failure(new[] {"Email not found"}), "", "");
 
         var signResult = await _userManager.CheckPasswordAsync(user, password);
 
         if (!signResult)
         {
-            return (JWTAuthorizationResult.Failure(new[] {"Wrong password"}), "");
+            return (JWTAuthorizationResult.Failure(new[] {"Wrong password"}), "", "");
         }
 
         var accessToken = await CreateAccessToken(user);
@@ -53,10 +53,10 @@ public class AuthenticationService : IAuthenticationService
         
         if (!result.Succeeded)
         {
-            return (JWTAuthorizationResult.Failure(new[] {"Something went wrong"}), "");
+            return (JWTAuthorizationResult.Failure(new[] {"Something went wrong"}), "", "");
         }
         
-        return (JWTAuthorizationResult.Success(accessToken, refreshToken), user.Id);
+        return (JWTAuthorizationResult.Success(accessToken), refreshToken, user.Id);
     }
 
     public async Task<Result> LogoutUser(string userId, string email)
@@ -79,13 +79,13 @@ public class AuthenticationService : IAuthenticationService
         return result.ToApplicationResult();
     }
 
-    public async Task<JWTAuthorizationResult> RefreshToken(string token)
+    public async Task<(JWTAuthorizationResult, string refreshToken)> RefreshToken(string token)
     {
         var validationResult = await CheckRefreshToken(token);
 
         if (!validationResult.valid || validationResult.user == null)
         {
-            return (JWTAuthorizationResult.Failure(new List<string> {"User does not match token"}));
+            return (JWTAuthorizationResult.Failure(new List<string> {"User does not match token"}), "");
         }
 
         var accessToken = await CreateAccessToken(validationResult.user);
@@ -94,7 +94,7 @@ public class AuthenticationService : IAuthenticationService
         await _userManager.SetAuthenticationTokenAsync(validationResult.user, validationResult.user.Email, TokenName,
             refreshToken);
 
-        return JWTAuthorizationResult.Success(accessToken, refreshToken);
+        return (JWTAuthorizationResult.Success(accessToken), refreshToken);
     }
 
     private async Task<(bool valid, ApplicationUser? user)> CheckRefreshToken(string token)
