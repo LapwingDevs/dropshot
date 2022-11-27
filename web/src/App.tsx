@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Route, RouterProvider, Routes } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import TopBar from './components/Common/TopBar/TopBar';
 import Account from './routes/Account/Account';
 import AdminPanel from './routes/AdminPanel/AdminPanel';
@@ -17,15 +17,77 @@ import Login from './routes/Login/Login';
 import Order from './routes/Order/Order';
 import Register from './routes/Register/Register';
 import Root from './routes/Root/Root';
-import { AuthProvider } from './contexts/AuthContext';
+import AuthContext, { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './routes/Auth/PrivateRoute';
 import AdminRoute from './routes/Auth/AdminRoute';
 import AddAdmin from './routes/AdminPanel/UsersManagement/AddAdmin/AddAdmin';
 import AdminList from './routes/AdminPanel/UsersManagement/AdminList/AdminList';
 import { SnackbarProvider } from 'notistack';
+import AxiosClient from './api/Client';
+import { refresh } from './api/controllers/AuthClient';
+import UnauthorizedRoute from './routes/Auth/UnauthorizedRoute';
 
 const App = () => {
-  // useAuth
+  const { isAuthLoading, currentUser } = useContext(AuthContext);
+
+  const getAccessTokenAndSetAxiosInterceptors = async () => {
+    const accessToken = sessionStorage.getItem('token');
+    if (accessToken !== null) {
+      setAxiosRequestInterceptor();
+      setAxiosResponseInterceptor();
+    }
+  };
+
+  const setAxiosRequestInterceptor = () => {
+    AxiosClient.interceptors.request.use(
+      (config) => {
+        if (config && config.headers) {
+          const accessToken = sessionStorage.getItem('token');
+          config.headers['Authorization'] = `Bearer ${accessToken}`;
+        }
+        return config;
+      },
+      () => {
+        alert('Incorporating token went wrong!');
+      },
+    );
+  };
+
+  const setAxiosResponseInterceptor = () => {
+    AxiosClient.interceptors.response.use(
+      (response) => response,
+      async (error) => {
+        const originalConfig = error.config;
+
+        if (error.response.status === 401 && !originalConfig.send) {
+          originalConfig.send = true;
+
+          try {
+            await refresh().then((response) => {
+              if (!response.succeeded) {
+                throw Error(response.errors[0]);
+              }
+
+              sessionStorage.setItem('token', response.token);
+              originalConfig.headers['Authorization'] = `Bearer ${response.token}`;
+
+              return AxiosClient(originalConfig);
+            });
+          } catch (_error) {
+            return Promise.reject(_error);
+          }
+        }
+      },
+    );
+  };
+
+  React.useEffect(() => {
+    if (!isAuthLoading) {
+      getAccessTokenAndSetAxiosInterceptors().then(() => {
+        console.log('DU{A');
+      });
+    }
+  }, [isAuthLoading]);
 
   return (
     <BrowserRouter>
@@ -38,8 +100,10 @@ const App = () => {
           <TopBar />
           <Routes>
             <Route path="/" element={<Root />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route element={<UnauthorizedRoute />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </Route>
             {/* Authenticated paths */}
             <Route element={<PrivateRoute />}>
               <Route path="/drops" element={<Drops />} />
