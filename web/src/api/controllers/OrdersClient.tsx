@@ -1,8 +1,5 @@
 import AxiosClient from '../Client';
 import { SubmitOrderRequest } from '../models/Orders/SubmitOrderRequest';
-import { AddProductRequest } from '../models/Products/AddProductRequest';
-import { ProductDetailsDto } from '../models/Products/ProductDetailsDto';
-import { ProductOnListDto } from '../models/Products/ProductOnListDto';
 
 const controllerName = 'Orders';
 
