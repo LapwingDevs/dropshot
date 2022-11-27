@@ -43,10 +43,13 @@ public class DropsService : IDropsService
 
         var drop = await _dbContext.Drops
             .Include(d => d.DropItems)
+            .ThenInclude(i => i.CartItems
+                .Where(cartItem => cartItem.ReservationEndDateTime > _dateTime.Now))
+            .Include(d => d.DropItems)
             .ThenInclude(i => i.Variant)
             .ThenInclude(v => v.Product)
             .SingleOrDefaultAsync(d => d.Id == dropId);
-
+        
         if (drop is null)
         {
             throw new Exception($"Cannot find drop with id {dropId}");
@@ -79,7 +82,8 @@ public class DropsService : IDropsService
                     ProductId = x.Variant.ProductId,
                     ProductName = x.Variant.Product.Name,
                     UnitOfSize = x.Variant.Product.UnitOfSize,
-                    Size = x.Variant.Size
+                    Size = x.Variant.Size,
+                    ReservationEndDateTime = x.CartItems.Count == 1 ? x.CartItems.First().ReservationEndDateTime: null
                 }).ToList()
         };
     }

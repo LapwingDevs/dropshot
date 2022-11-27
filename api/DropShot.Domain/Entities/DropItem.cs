@@ -13,4 +13,6 @@ public class DropItem
 
     public Variant Variant { get; set; }
     public int VariantId { get; set; }
+    
+    public ICollection<CartItem> CartItems { get; set; }
 }
