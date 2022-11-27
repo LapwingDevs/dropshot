@@ -1,30 +1,66 @@
 using System.ComponentModel;
+using DropShot.Application.Auth.Interfaces;
+using DropShot.Application.Auth.Models;
 using DropShot.Application.Common;
 using DropShot.Application.Common.Abstraction;
+using DropShot.Application.Users.Models;
 using DropShot.Domain.Constants;
 using DropShot.Domain.Entities;
 using DropShot.Domain.Enums;
+using DropShot.Infrastructure.DAL.Helpers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace DropShot.Infrastructure.DAL;
 
 public class DropShotDbContextInitializer
 {
+    private readonly IAuthService _authService;
     private readonly DropShotDbContext _dbContext;
     private readonly IAppDateTime _appDateTime;
+    private readonly DefaultAdmin _defaultAdmin;
 
-    public DropShotDbContextInitializer(DropShotDbContext dbContext, IAppDateTime appDateTime)
+    public DropShotDbContextInitializer(
+        DropShotDbContext dbContext, 
+        IAppDateTime appDateTime, 
+        IAuthService authService, 
+        IOptions<DefaultAdmin> defaultAdmin)
     {
         _dbContext = dbContext;
         _appDateTime = appDateTime;
+        _authService = authService;
+        _defaultAdmin = defaultAdmin.Value;
     }
 
     public async Task InitDatabase() => await _dbContext.Database.MigrateAsync();
 
     public async Task SeedDatabase()
     {
-        // TODO: Seed roles, users
+        var admins = await _authService.GetAdmins();
+        if (!admins.Any())
+        {
+            var admin = await _authService.RegisterUser(new RegisterUserDto
+            {
+                FirstName = _defaultAdmin.FirstName,
+                LastName = _defaultAdmin.LastName,
+                Password = _defaultAdmin.Password,
+                Email = _defaultAdmin.Email,
+                Address = new AddressDto
+                {
+                    Line1 = "Test",
+                    Line2 = "Test2",
+                    PostalCode = "44-100",
+                    City = "Gliwice",
+                }
+            });
 
+            if (!admin.Errors.Any())
+            {
+                await _authService.PromoteUser(admin.User.Email);
+            }
+            
+        }
+        
         // Default data
         // Seed, if necessary
         if (_dbContext.Products.Any() == false)
