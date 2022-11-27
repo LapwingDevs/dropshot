@@ -35,9 +35,9 @@ const DropsManagement = () => {
             </span>
             <span>{format(new Date(drop.startDateTime), appDateFormat)} | </span>
             <span>{format(new Date(drop.endDateTime), appDateFormat)}</span>
-            <span>
+            {/* <span>
               <Button onClick={() => navigate(drop.id.toString())}>Open</Button>
-            </span>
+            </span> */}
           </div>
         );
       })}

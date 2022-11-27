@@ -20,14 +20,22 @@ const ProductsManagement = () => {
 
   return (
     <div>
-      <Button onClick={() => navigate('new')}>Add product</Button>
+      <Button onClick={() => navigate('new')} variant={'outlined'} style={{ color: 'black' }}>
+        Add product
+      </Button>
       <div>Products management</div>
       {products.map((product) => {
         return (
           <div key={product.id}>
             <span>- {product.name}</span>
             <span>
-              <Button onClick={() => navigate(product.id.toString())}>open</Button>
+              <Button
+                onClick={() => navigate(product.id.toString())}
+                variant={'outlined'}
+                style={{ color: 'black', marginLeft: '5px' }}
+              >
+                open
+              </Button>
             </span>
           </div>
         );

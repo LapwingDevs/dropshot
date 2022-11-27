@@ -75,7 +75,12 @@ const Order = () => {
           <div>Total price: {getTotalPrice()} PLN</div>
         </div>
       )}
-      <Button disabled={userCart === undefined || userCart.cartItems.length === 0} onClick={submit}>
+      <Button
+        disabled={userCart === undefined || userCart.cartItems.length === 0}
+        onClick={submit}
+        variant={'outlined'}
+        style={{ color: 'black', marginLeft: '5px' }}
+      >
         Submit order
       </Button>
     </div>

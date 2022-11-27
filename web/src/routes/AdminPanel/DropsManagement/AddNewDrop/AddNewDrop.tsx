@@ -1,4 +1,4 @@
-import { Button, MenuItem, Select, TextField } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import React, { useState, useCallback, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { getWarehouseVariants } from '../../../../api/controllers/VariantsClient';
@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { appDateFormat } from '../../../../constants/Dates';
+import './AddNewDrop.scss';
 
 interface IFormData {
   name: string;
@@ -74,11 +75,11 @@ const AddNewDrop = () => {
   }, [fetchVariants]);
 
   return (
-    <div>
-      <div>new drop</div>
+    <div className="add-new-drop-container">
+      <div className="field">Add new drop</div>
 
       <form>
-        <div>
+        <div className="field">
           <Controller
             name={'name'}
             control={control}
@@ -86,33 +87,39 @@ const AddNewDrop = () => {
           />
         </div>
 
-        <div>
+        <div className="field">
           <Controller
             name={'description'}
             control={control}
-            render={({ field: { onChange, value } }) => <TextField onChange={onChange} value={value} label={'name'} />}
-          />
-        </div>
-
-        <div>
-          <Controller
-            control={control}
-            name={'selectedVariants'}
             render={({ field: { onChange, value } }) => (
-              <Select
-                multiple
-                onChange={onChange}
-                value={value}
-                renderValue={(selected) => selected.join(', ')}
-                defaultValue={[]}
-              >
-                {generateSelectOptions()}
-              </Select>
+              <TextField onChange={onChange} value={value} label={'description'} />
             )}
           />
         </div>
 
-        <div>
+        <div className="field">
+          <Controller
+            control={control}
+            name={'selectedVariants'}
+            render={({ field: { onChange, value } }) => (
+              <FormControl>
+                <InputLabel>Variants</InputLabel>
+                <Select
+                  multiple
+                  onChange={onChange}
+                  value={value}
+                  renderValue={(selected) => selected.join(', ')}
+                  defaultValue={[]}
+                  style={{ width: '223px' }}
+                >
+                  {generateSelectOptions()}
+                </Select>
+              </FormControl>
+            )}
+          />
+        </div>
+
+        <div className="field">
           <Controller
             name={'startDateTime'}
             control={control}
@@ -123,12 +130,13 @@ const AddNewDrop = () => {
                 timeInputLabel="Time:"
                 dateFormat={appDateFormat}
                 showTimeInput
+                placeholderText={'Start date'}
               />
             )}
           />
         </div>
 
-        <div>
+        <div className="field">
           <Controller
             name={'endDateTime'}
             control={control}
@@ -139,12 +147,15 @@ const AddNewDrop = () => {
                 timeInputLabel="Time:"
                 dateFormat={appDateFormat}
                 showTimeInput
+                placeholderText={'End date'}
               />
             )}
           />
         </div>
 
-        <Button onClick={handleSubmit((data) => submitDrop(data))}>Submit</Button>
+        <Button onClick={handleSubmit((data) => submitDrop(data))} style={{ color: 'black' }}>
+          Submit
+        </Button>
       </form>
     </div>
   );
