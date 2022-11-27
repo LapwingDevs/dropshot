@@ -6,7 +6,7 @@
 
 a) Start db
 
-You can start database with docker compose, it contains PostgreSQL and PgAdmin to db overview. Run `docker compose up -d`
+You can start database with docker compose, it contains PostgreSQL and PgAdmin to db overview. Run `docker compose -f "docker-compose-infra-only.yml" up -d`
 
 b) PgAdmin 
 
@@ -29,6 +29,3 @@ dotnet ef migrations add MIGRATION_NAME --project DropShot.Infrastructure --star
 
 dotnet ef database update --project DropShot.Infrastructure --startup-project DropShot.API
 ```
-
-### Backend
-### Frontend
