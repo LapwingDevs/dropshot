@@ -29,7 +29,7 @@ internal class ExpiredDeadlinesCleaner : IExpiredDeadlinesCleaner
                 i.DropItem.Status == DropItemStatus.Reserved)
             .ToListAsync(cancellationToken);
 
-            var cleanedCartItemsCount = 0;
+        var cleanedCartItemsCount = 0;
         foreach (var cartItem in cartItemsWithExpiredReservationTimeAndStatusReserved)
         {
             cartItem.DropItem.Status = DropItemStatus.Available;
