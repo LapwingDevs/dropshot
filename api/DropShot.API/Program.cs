@@ -94,7 +94,12 @@ if (app.Environment.IsProduction() == false)
     using (var scope = app.Services.CreateScope())
     {
         var initializer = scope.ServiceProvider.GetRequiredService<DropShotDbContextInitializer>();
-        //await initializer.InitDatabase();
+
+        if (builder.Configuration.GetValue<bool>("Testing") == false)
+        {
+            await initializer.InitDatabase();
+        }
+
         await initializer.SeedDatabase();
     }
 }
