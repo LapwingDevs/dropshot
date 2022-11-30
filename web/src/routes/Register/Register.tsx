@@ -5,7 +5,7 @@ import { passwordRegex, onlyLetters } from '../../constants/Regexes';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import { useNavigate } from 'react-router-dom';
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Typography } from '@mui/material';
 import { register } from '../../api/controllers/AuthClient';
 import AuthContext from '../../contexts/AuthContext';
 import { useSnackbar } from 'notistack';
@@ -101,8 +101,8 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <div>Register</div>
+    <div className="register-container">
+      <Typography variant="h3">Create Account</Typography>
 
       <form>
         <div>
@@ -111,6 +111,7 @@ const Register = () => {
             control={control}
             render={({ field: { onChange, value } }) => (
               <TextField
+                className="register-item"
                 onChange={onChange}
                 value={value}
                 label={'First name'}
@@ -127,6 +128,7 @@ const Register = () => {
             control={control}
             render={({ field: { onChange, value } }) => (
               <TextField
+                className="register-item"
                 onChange={onChange}
                 value={value}
                 label={'Last name'}
@@ -143,6 +145,7 @@ const Register = () => {
             control={control}
             render={({ field: { onChange, value } }) => (
               <TextField
+                className="register-item"
                 type="email"
                 onChange={onChange}
                 value={value}
@@ -160,6 +163,7 @@ const Register = () => {
             control={control}
             render={({ field: { onChange, value } }) => (
               <TextField
+                className="register-item"
                 type="password"
                 onChange={onChange}
                 value={value}
@@ -177,6 +181,7 @@ const Register = () => {
             control={control}
             render={({ field: { onChange, value } }) => (
               <TextField
+                className="register-item"
                 type="password"
                 onChange={onChange}
                 value={value}
@@ -193,7 +198,7 @@ const Register = () => {
             name={'addressLine1'}
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextField onChange={onChange} value={value} label={'Line 1'} />
+              <TextField className="register-item" onChange={onChange} value={value} label={'Line 1'} />
             )}
           />
         </div>
@@ -203,7 +208,7 @@ const Register = () => {
             name={'addressLine2'}
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextField onChange={onChange} value={value} label={'Line 2'} />
+              <TextField className="register-item" onChange={onChange} value={value} label={'Line 2'} />
             )}
           />
         </div>
@@ -213,7 +218,7 @@ const Register = () => {
             name={'addressPostalCode'}
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextField onChange={onChange} value={value} label={'Postal code'} />
+              <TextField className="register-item" onChange={onChange} value={value} label={'Postal code'} />
             )}
           />
         </div>
@@ -222,11 +227,13 @@ const Register = () => {
           <Controller
             name={'addressCity'}
             control={control}
-            render={({ field: { onChange, value } }) => <TextField onChange={onChange} value={value} label={'City'} />}
+            render={({ field: { onChange, value } }) => (
+              <TextField className="register-item" onChange={onChange} value={value} label={'City'} />
+            )}
           />
         </div>
 
-        <Button type="submit" onClick={handleSubmit(onSubmit)}>
+        <Button className="register-item" sx={{ width: '100%' }} type="submit" onClick={handleSubmit(onSubmit)}>
           Submit
         </Button>
       </form>

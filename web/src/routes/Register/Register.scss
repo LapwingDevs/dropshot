@@ -1,0 +1,11 @@
+.register-container{
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .register-item{
+    margin-top: 10px;
+  }
+}
