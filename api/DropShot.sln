@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{23B6D659
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DropShot.Application.UnitTests", "tests\DropShot.Application.UnitTests\DropShot.Application.UnitTests.csproj", "{E3E328DE-671F-4E79-92CD-B9D50C8C6898}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DropShotApi.IntegrationTests", "tests\DropShotApi.IntegrationTests\DropShotApi.IntegrationTests.csproj", "{0D1A3AD8-20CF-4265-A6EC-5791F38AF01D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,8 +40,13 @@ Global
 		{E3E328DE-671F-4E79-92CD-B9D50C8C6898}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3E328DE-671F-4E79-92CD-B9D50C8C6898}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3E328DE-671F-4E79-92CD-B9D50C8C6898}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D1A3AD8-20CF-4265-A6EC-5791F38AF01D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D1A3AD8-20CF-4265-A6EC-5791F38AF01D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D1A3AD8-20CF-4265-A6EC-5791F38AF01D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D1A3AD8-20CF-4265-A6EC-5791F38AF01D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E3E328DE-671F-4E79-92CD-B9D50C8C6898} = {23B6D659-1C46-4F91-A823-82C2E409B793}
+		{0D1A3AD8-20CF-4265-A6EC-5791F38AF01D} = {23B6D659-1C46-4F91-A823-82C2E409B793}
 	EndGlobalSection
 EndGlobal
