@@ -1,10 +1,11 @@
-import { Button, MenuItem, Select, TextField } from '@mui/material';
+import { Button, MenuItem, Select, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { addProduct } from '../../../../api/controllers/ProductsClient';
 import { AddProductRequest } from '../../../../api/models/Products/AddProductRequest';
 import { ClothesUnitOfMeasure } from '../../../../api/models/Products/ClothesUnitOfMeasure';
+import './AddNewProduct.scss';
 
 interface IFormData {
   name: string;
@@ -56,13 +57,18 @@ const AddNewProduct = () => {
   };
 
   return (
-    <div>
+    <div className="container">
+      <Typography variant="h4" sx={{ marginBottom: '20px' }}>
+        Add new product:
+      </Typography>
       <form>
         <div>
           <Controller
             name={'name'}
             control={control}
-            render={({ field: { onChange, value } }) => <TextField onChange={onChange} value={value} label={'name'} />}
+            render={({ field: { onChange, value } }) => (
+              <TextField sx={{ marginBottom: '10px' }} onChange={onChange} value={value} label={'name'} />
+            )}
           />
         </div>
 
@@ -70,7 +76,9 @@ const AddNewProduct = () => {
           <Controller
             name={'description'}
             control={control}
-            render={({ field: { onChange, value } }) => <TextField onChange={onChange} value={value} label={'desc'} />}
+            render={({ field: { onChange, value } }) => (
+              <TextField sx={{ marginBottom: '10px' }} onChange={onChange} value={value} label={'desc'} />
+            )}
           />
         </div>
 
@@ -79,7 +87,13 @@ const AddNewProduct = () => {
             name={'price'}
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextField type={'number'} onChange={onChange} value={value} label={'price'} />
+              <TextField
+                sx={{ marginBottom: '10px' }}
+                type={'number'}
+                onChange={onChange}
+                value={value}
+                label={'price'}
+              />
             )}
           />
         </div>
@@ -89,7 +103,7 @@ const AddNewProduct = () => {
             control={control}
             name={'unitOfSize'}
             render={({ field: { onChange, value } }) => (
-              <Select onChange={onChange} value={value}>
+              <Select sx={{ marginBottom: '10px' }} onChange={onChange} value={value}>
                 {generateSelectOptions()}
               </Select>
             )}

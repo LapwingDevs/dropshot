@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Alert, CircularProgress, debounce, Snackbar, TextField } from '@mui/material';
+import { Alert, CircularProgress, debounce, Snackbar, TextField, Typography } from '@mui/material';
 import { UserDto } from '../../../../api/models/User/UserDto';
 import { getUsers } from '../../../../api/controllers/UserClient';
 import { promoteUser } from '../../../../api/controllers/AuthClient';
@@ -49,8 +49,10 @@ const AddAdmin = () => {
   };
 
   return (
-    <div>
-      <div>Search for admin:</div>
+    <div className="list-container">
+      <Typography sx={{ marginBottom: '15px' }} variant="h4">
+        Search for admin:
+      </Typography>
       <TextField onChange={handleInputChange} value={text} />
       <div>
         {usersOptionsLoading ? (

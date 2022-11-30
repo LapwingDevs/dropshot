@@ -4,9 +4,10 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import * as yup from 'yup';
 import { onlyLetters } from '../../constants/Regexes';
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Typography } from '@mui/material';
 import { updateUser } from '../../api/controllers/UserClient';
 import { useSnackbar } from 'notistack';
+import './Account.scss';
 
 const validationSchema = yup.object({
   firstName: yup
@@ -87,8 +88,10 @@ const Account = () => {
   };
 
   return (
-    <div>
-      <div>Account info</div>
+    <div className="container">
+      <Typography variant="h4" sx={{ marginBottom: '10px' }}>
+        Account info
+      </Typography>
       <form>
         <div>
           <Controller
@@ -96,6 +99,7 @@ const Account = () => {
             control={control}
             render={({ field: { onChange, value } }) => (
               <TextField
+                sx={{ marginTop: '20px' }}
                 onChange={onChange}
                 value={value}
                 label={'First name'}
@@ -112,6 +116,7 @@ const Account = () => {
             control={control}
             render={({ field: { onChange, value } }) => (
               <TextField
+                sx={{ marginTop: '20px' }}
                 onChange={onChange}
                 value={value}
                 label={'Last name'}
@@ -127,7 +132,14 @@ const Account = () => {
             name={'email'}
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextField type="email" onChange={onChange} value={value} label={'Email'} disabled={true} />
+              <TextField
+                sx={{ marginTop: '20px' }}
+                type="email"
+                onChange={onChange}
+                value={value}
+                label={'Email'}
+                disabled={true}
+              />
             )}
           />
         </div>
@@ -137,7 +149,7 @@ const Account = () => {
             name={'addressLine1'}
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextField onChange={onChange} value={value} label={'Line 1'} />
+              <TextField sx={{ marginTop: '20px' }} onChange={onChange} value={value} label={'Line 1'} />
             )}
           />
         </div>
@@ -147,7 +159,7 @@ const Account = () => {
             name={'addressLine2'}
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextField onChange={onChange} value={value} label={'Line 2'} />
+              <TextField sx={{ marginTop: '20px' }} onChange={onChange} value={value} label={'Line 2'} />
             )}
           />
         </div>
@@ -157,7 +169,7 @@ const Account = () => {
             name={'addressPostalCode'}
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextField onChange={onChange} value={value} label={'Postal code'} />
+              <TextField sx={{ marginTop: '20px' }} onChange={onChange} value={value} label={'Postal code'} />
             )}
           />
         </div>
@@ -166,11 +178,13 @@ const Account = () => {
           <Controller
             name={'addressCity'}
             control={control}
-            render={({ field: { onChange, value } }) => <TextField onChange={onChange} value={value} label={'City'} />}
+            render={({ field: { onChange, value } }) => (
+              <TextField sx={{ marginTop: '20px' }} onChange={onChange} value={value} label={'City'} />
+            )}
           />
         </div>
 
-        <Button type="submit" onClick={handleSubmit(onSubmit)}>
+        <Button sx={{ marginTop: '20px' }} type="submit" onClick={handleSubmit(onSubmit)}>
           Save changes
         </Button>
       </form>

@@ -5,6 +5,8 @@ import UserCard from '../../../../components/UserManagment/UserCard/UserCard';
 import { degradeUser } from '../../../../api/controllers/AuthClient';
 import AuthContext from '../../../../contexts/AuthContext';
 import { useSnackbar } from 'notistack';
+import './AdminList.scss';
+import { Typography } from '@mui/material';
 
 const AdminList = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -45,7 +47,10 @@ const AdminList = () => {
   };
 
   return (
-    <div>
+    <div className="list-container">
+      <Typography sx={{ marginBottom: '15px' }} variant="h4">
+        List of admins:
+      </Typography>
       <div>
         {admins.map((admin) => {
           return (

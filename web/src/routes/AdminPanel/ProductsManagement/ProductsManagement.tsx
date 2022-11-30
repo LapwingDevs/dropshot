@@ -1,8 +1,9 @@
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getProducts } from '../../../api/controllers/ProductsClient';
 import { ProductOnListDto } from '../../../api/models/Products/ProductOnListDto';
+import './ProductsManagement.scss';
 
 const ProductsManagement = () => {
   const [products, setProducts] = useState<ProductOnListDto[]>([]);
@@ -19,19 +20,20 @@ const ProductsManagement = () => {
   }, [fetchProducts]);
 
   return (
-    <div>
-      <Button onClick={() => navigate('new')}>Add product</Button>
-      <div>Products management</div>
+    <div className="container">
+      <Typography variant="h4" sx={{ marginBottom: '10px' }}>
+        Products management
+      </Typography>
       {products.map((product) => {
         return (
-          <div key={product.id}>
-            <span>- {product.name}</span>
-            <span>
-              <Button onClick={() => navigate(product.id.toString())}>open</Button>
-            </span>
+          <div className="item" key={product.id}>
+            <Typography variant="h6">- {product.name}</Typography>
+            <Button onClick={() => navigate(product.id.toString())}>open</Button>
           </div>
         );
       })}
+
+      <Button onClick={() => navigate('new')}>Add product</Button>
     </div>
   );
 };

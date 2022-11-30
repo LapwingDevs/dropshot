@@ -28,8 +28,8 @@ const UserMenu = () => {
 
   const logOut = () => {
     signOut();
-    navigate('/login');
     handleCloseMenu();
+    navigate('/login');
   };
 
   return (

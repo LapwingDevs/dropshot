@@ -1,4 +1,4 @@
-import { Button, MenuItem, Select, TextField } from '@mui/material';
+import { Button, MenuItem, Select, TextField, Typography } from '@mui/material';
 import React, { useState, useCallback, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { getWarehouseVariants } from '../../../../api/controllers/VariantsClient';
@@ -74,8 +74,10 @@ const AddNewDrop = () => {
   }, [fetchVariants]);
 
   return (
-    <div>
-      <div>new drop</div>
+    <div className="container">
+      <Typography variant="h4" sx={{ marginBottom: '20px' }}>
+        New drop
+      </Typography>
 
       <form>
         <div>
@@ -90,7 +92,9 @@ const AddNewDrop = () => {
           <Controller
             name={'description'}
             control={control}
-            render={({ field: { onChange, value } }) => <TextField onChange={onChange} value={value} label={'name'} />}
+            render={({ field: { onChange, value } }) => (
+              <TextField sx={{ marginBottom: '10px' }} onChange={onChange} value={value} label={'name'} />
+            )}
           />
         </div>
 
@@ -100,6 +104,7 @@ const AddNewDrop = () => {
             name={'selectedVariants'}
             render={({ field: { onChange, value } }) => (
               <Select
+                sx={{ marginBottom: '10px' }}
                 multiple
                 onChange={onChange}
                 value={value}
@@ -144,7 +149,9 @@ const AddNewDrop = () => {
           />
         </div>
 
-        <Button onClick={handleSubmit((data) => submitDrop(data))}>Submit</Button>
+        <Button sx={{ marginBottom: '10px' }} onClick={handleSubmit((data) => submitDrop(data))}>
+          Submit
+        </Button>
       </form>
     </div>
   );
