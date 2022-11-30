@@ -1,0 +1,6 @@
+{
+  "stryker-config":
+  {
+    "mutate": ["**/DropsListConverter.cs"]
+  }
+}
