@@ -3,7 +3,7 @@ import { DropCardDto } from '../../../api/models/Drops/DropCardDto';
 import { useNavigate } from 'react-router-dom';
 
 import './DropCard.scss';
-import { Button, Card } from '@mui/material';
+import { Button, Card, Typography } from '@mui/material';
 import { DropStatus } from '../../../constants/Drops';
 import { format } from 'date-fns';
 import { appDateFormat } from '../../../constants/Dates';
@@ -18,8 +18,8 @@ const DropCard = ({ drop, dropStatus }: DropCardProps) => {
 
   return (
     <Card className="drop-card-container" onClick={() => navigate(`${drop.id}`)}>
-      <div>{drop.name}</div>
-      <div>
+      <Typography>{drop.name}</Typography>
+      <Typography>
         <span>{dropStatus === DropStatus.IncomingDrop ? 'Start: ' : 'End: '}</span>
         <span>
           {format(
@@ -27,7 +27,7 @@ const DropCard = ({ drop, dropStatus }: DropCardProps) => {
             appDateFormat,
           )}
         </span>
-      </div>
+      </Typography>
     </Card>
   );
 };
