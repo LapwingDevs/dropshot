@@ -12,6 +12,7 @@ import { useCart } from '../../contexts/CartContext';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import data from '../../config.json';
 import './DropDetails.scss';
+import { Typography } from '@mui/material';
 
 const DropDetails = () => {
   const [connection, setConnection] = useState<HubConnection | null>(null);
@@ -102,13 +103,19 @@ const DropDetails = () => {
     } else {
       return (
         <div className="drop-container">
-          <div className="title">{drop.name}</div>
-          <div className="dates">
+          <Typography variant="h4" className="title">
+            {drop.name}
+          </Typography>
+          <Typography variant="h6" className="dates">
             {format(new Date(drop.startDateTime), appDateFormat)} - {format(new Date(drop.endDateTime), appDateFormat)}
-          </div>
-          <div className="description">{drop.description}</div>
+          </Typography>
+          <Typography variant="h6" className="description">
+            {drop.description}
+          </Typography>
 
-          <div>available</div>
+          <Typography variant="h6" sx={{ marginTop: '15px' }}>
+            Available:
+          </Typography>
           <div className="drop-items-wrapper">
             {drop.availableDropItems.map((dropItem) => {
               return (
@@ -120,7 +127,10 @@ const DropDetails = () => {
               );
             })}
           </div>
-          <div>reserved</div>
+
+          <Typography variant="h6" sx={{ marginTop: '15px' }}>
+            Reserved:
+          </Typography>
           <div className="drop-items-wrapper">
             {drop.reservedDropItems.map((dropItem) => {
               return (
