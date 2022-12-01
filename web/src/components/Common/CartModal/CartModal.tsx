@@ -23,7 +23,6 @@ const CartModal = ({ isOpen, handleClose }: CartModalProps) => {
       className="cart-modal-container"
       overlayClassName="cart-modal-overlay"
     >
-      <div>cart modal</div>
       <div>
         {userCart &&
           userCart.cartItems.map((item) => {

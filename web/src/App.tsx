@@ -31,11 +31,8 @@ const App = () => {
   const { isAuthLoading, currentUser } = useContext(AuthContext);
 
   const getAccessTokenAndSetAxiosInterceptors = async () => {
-    const accessToken = sessionStorage.getItem('token');
-    if (accessToken !== null) {
-      setAxiosRequestInterceptor();
-      setAxiosResponseInterceptor();
-    }
+    setAxiosRequestInterceptor();
+    setAxiosResponseInterceptor();
   };
 
   const setAxiosRequestInterceptor = () => {
@@ -82,12 +79,10 @@ const App = () => {
   };
 
   React.useEffect(() => {
-    if (!isAuthLoading) {
-      getAccessTokenAndSetAxiosInterceptors().then(() => {
-        console.log('DU{A');
-      });
-    }
-  }, [isAuthLoading]);
+    getAccessTokenAndSetAxiosInterceptors().then(() => {
+      console.log('DU{A');
+    });
+  }, []);
 
   return (
     <BrowserRouter>

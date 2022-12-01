@@ -1,4 +1,4 @@
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Button, MenuItem, Select, Typography, FormControl, InputLabel, TextField } from '@mui/material';
 import React, { useState, useCallback, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { getWarehouseVariants } from '../../../../api/controllers/VariantsClient';
@@ -75,34 +75,38 @@ const AddNewDrop = () => {
   }, [fetchVariants]);
 
   return (
-    <div className="add-new-drop-container">
-      <div className="field">Add new drop</div>
+    <div className="container">
+      <Typography variant="h4" sx={{ marginBottom: '20px' }}>
+        New drop
+      </Typography>
 
       <form>
-        <div className="field">
+        <div>
           <Controller
             name={'name'}
             control={control}
-            render={({ field: { onChange, value } }) => <TextField onChange={onChange} value={value} label={'name'} />}
-          />
-        </div>
-
-        <div className="field">
-          <Controller
-            name={'description'}
-            control={control}
             render={({ field: { onChange, value } }) => (
-              <TextField onChange={onChange} value={value} label={'description'} />
+              <TextField sx={{ marginBottom: '10px' }} onChange={onChange} value={value} label={'name'} />
             )}
           />
         </div>
 
-        <div className="field">
+        <div>
+          <Controller
+            name={'description'}
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextField sx={{ marginBottom: '10px' }} onChange={onChange} value={value} label={'description'} />
+            )}
+          />
+        </div>
+
+        <div>
           <Controller
             control={control}
             name={'selectedVariants'}
             render={({ field: { onChange, value } }) => (
-              <FormControl>
+              <FormControl sx={{ marginBottom: '10px' }}>
                 <InputLabel>Variants</InputLabel>
                 <Select
                   multiple
@@ -153,7 +157,7 @@ const AddNewDrop = () => {
           />
         </div>
 
-        <Button onClick={handleSubmit((data) => submitDrop(data))} style={{ color: 'black' }}>
+        <Button sx={{ marginBottom: '10px' }} onClick={handleSubmit((data) => submitDrop(data))}>
           Submit
         </Button>
       </form>

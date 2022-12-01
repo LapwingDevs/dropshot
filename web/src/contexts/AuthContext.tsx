@@ -51,9 +51,9 @@ export const AuthProvider = ({ children }: ProviderProps) => {
       }
       sessionStorage.setItem('token', userData.token);
 
+      setIsAuthLoading(false);
       setCurrentUser(userData.user);
       setUserRole(decodeJwt(userData.token));
-      setIsAuthLoading(false);
     });
   };
 

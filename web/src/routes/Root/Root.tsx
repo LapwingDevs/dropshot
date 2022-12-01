@@ -11,7 +11,7 @@ const Root = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (sessionStorage.getItem('token') === null) {
+    if (sessionStorage.getItem('token') !== null) {
       navigate('/drops');
     } else {
       navigate('/login');

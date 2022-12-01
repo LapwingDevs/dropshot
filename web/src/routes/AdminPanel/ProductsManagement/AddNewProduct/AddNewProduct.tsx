@@ -1,4 +1,4 @@
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Button, MenuItem, Select, FormControl, InputLabel, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -57,44 +57,53 @@ const AddNewProduct = () => {
   };
 
   return (
-    <div className="add-new-product-container">
+    <div className="container">
+      <Typography variant="h4" sx={{ marginBottom: '20px' }}>
+        Add new product:
+      </Typography>
       <form>
-        <div className="field">Add new product</div>
-
-        <div className="field">
+        <div>
           <Controller
             name={'name'}
             control={control}
-            render={({ field: { onChange, value } }) => <TextField onChange={onChange} value={value} label={'name'} />}
+            render={({ field: { onChange, value } }) => (
+              <TextField sx={{ marginBottom: '10px' }} onChange={onChange} value={value} label={'name'} />
+            )}
           />
         </div>
 
-        <div className="field">
+        <div>
           <Controller
             name={'description'}
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextField onChange={onChange} value={value} label={'description'} />
+              <TextField sx={{ marginBottom: '10px' }} onChange={onChange} value={value} label={'description'} />
             )}
           />
         </div>
 
-        <div className="field">
+        <div>
           <Controller
             name={'price'}
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextField type={'number'} onChange={onChange} value={value} label={'price'} />
+              <TextField
+                sx={{ marginBottom: '10px' }}
+                type={'number'}
+                onChange={onChange}
+                value={value}
+                label={'price'}
+              />
             )}
           />
         </div>
 
-        <div className="field">
+        <div>
           <Controller
             control={control}
             name={'unitOfSize'}
             render={({ field: { onChange, value } }) => (
-              <FormControl>
+              <FormControl sx={{ marginBottom: '10px' }}>
                 <InputLabel>Unit of size</InputLabel>
                 <Select onChange={onChange} value={value} style={{ width: '223px' }}>
                   {generateSelectOptions()}
@@ -104,11 +113,9 @@ const AddNewProduct = () => {
           />
         </div>
 
-        <div className="field">
-          <Button onClick={handleSubmit((data) => onSubmit(data))} variant={'outlined'} style={{ color: 'black' }}>
-            Submit
-          </Button>
-          <Button onClick={() => reset()} variant={'outlined'} style={{ color: 'black' }}>
+        <div>
+          <Button onClick={handleSubmit((data) => onSubmit(data))}>Submit</Button>
+          <Button onClick={() => reset()} variant={'outlined'}>
             Reset
           </Button>
         </div>

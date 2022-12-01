@@ -2,6 +2,7 @@ import React from 'react';
 import { CartItemDto } from '../../../api/models/Carts/CartItemDto';
 import DateCountdown from '../DateCountdown/DateCountdown';
 import './CartItem.scss';
+import { Typography } from '@mui/material';
 
 interface CartItemProps {
   item: CartItemDto;
@@ -10,15 +11,15 @@ interface CartItemProps {
 const CartItem = ({ item }: CartItemProps) => {
   return (
     <div className="cart-item-wrapper" key={item.itemReservationEndDateTime}>
-      <div>
+      <Typography variant="body2">
         {item.productName}[{item.variantSize}]
-      </div>
+      </Typography>
 
-      <div>{item.productPrice} PLN</div>
+      <Typography variant="body2">{item.productPrice} PLN</Typography>
 
-      <div>
+      <Typography variant="body2">
         <DateCountdown deadline={item.itemReservationEndDateTime} />
-      </div>
+      </Typography>
     </div>
   );
 };

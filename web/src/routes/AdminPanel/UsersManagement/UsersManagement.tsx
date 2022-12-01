@@ -1,17 +1,19 @@
 import React from 'react';
 
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 const UsersManagement = () => {
+  const navigate = useNavigate();
+
   return (
-    <div>
-      <div>
-        <Link to={'admin-list'}>List of admins</Link>
-      </div>
-      <div>
-        <Link to={'add-admin'}>Add admin</Link>
-      </div>
-      <Outlet />
+    <div className="admin-panel-container">
+      <Button className="item" onClick={() => navigate('admin-list')}>
+        List of admins
+      </Button>
+      <Button className="item" onClick={() => navigate('add-admin')}>
+        Add admin
+      </Button>
     </div>
   );
 };

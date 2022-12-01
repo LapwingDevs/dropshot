@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { UserDto } from '../../../api/models/User/UserDto';
-import { Button, Card } from '@mui/material';
+import { Button, Card, Typography } from '@mui/material';
 import ConfirmationDialog from '../../Common/ConfirmationDialog/ConfirmationDialog';
 
 interface AdminCardProps {
@@ -26,10 +26,10 @@ const UserCard = ({ user, buttonLabel, onConfirm, buttonDisabled }: AdminCardPro
   };
 
   return (
-    <Card>
-      <div>
+    <Card sx={{ display: 'flex', flexDirection: 'row', padding: '10px', marginTop: '15px' }}>
+      <Typography sx={{ marginRight: '10px' }} variant="h6">
         {user.firstName} {user.lastName} {user.email}
-      </div>
+      </Typography>
       <Button onClick={onButtonClicked} disabled={buttonDisabled}>
         {buttonLabel}
       </Button>

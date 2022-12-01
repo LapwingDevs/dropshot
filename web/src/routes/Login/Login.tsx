@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import './Login.scss';
-import { Alert, Button, TextField } from '@mui/material';
+import { Alert, Button, Container, TextField, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -62,8 +62,10 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <div>Login</div>
+    <div className="login-container">
+      <Typography className="login-item" variant="h3">
+        Log in to access hot drops in your neighbour!
+      </Typography>
 
       <form>
         <div>
@@ -72,6 +74,7 @@ const Login = () => {
             control={control}
             render={({ field: { onChange, value } }) => (
               <TextField
+                className="login-item"
                 type="email"
                 onChange={onChange}
                 value={value}
@@ -89,6 +92,7 @@ const Login = () => {
             control={control}
             render={({ field: { onChange, value } }) => (
               <TextField
+                className="login-item"
                 type="password"
                 onChange={onChange}
                 value={value}
@@ -101,8 +105,8 @@ const Login = () => {
         </div>
 
         <div>
-          <Button type="submit" onClick={handleSubmit(onSubmit)}>
-            Submit
+          <Button className="login-item" sx={{ width: '100%' }} type="submit" onClick={handleSubmit(onSubmit)}>
+            Login
           </Button>
           <p>
             Dont have an account? <b onClick={goToRegister}>Register!</b>
