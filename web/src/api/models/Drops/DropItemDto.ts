@@ -7,4 +7,5 @@ export interface DropItemDto {
   productName: string;
   unitOfSize: ClothesUnitOfMeasure;
   size: number;
+  reservationEndDateTime: string | null;
 }

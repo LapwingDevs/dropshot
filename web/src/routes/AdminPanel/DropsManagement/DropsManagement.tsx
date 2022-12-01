@@ -35,9 +35,9 @@ const DropsManagement = () => {
             </Typography>
             <Typography variant="h6">{format(new Date(drop.startDateTime), appDateFormat)} | </Typography>
             <Typography variant="h6">{format(new Date(drop.endDateTime), appDateFormat)}</Typography>
-            <Button sx={{ marginLeft: '10px' }} onClick={() => navigate(drop.id.toString())}>
+{/*            <Button sx={{ marginLeft: '10px' }} onClick={() => navigate(drop.id.toString())}>
               Open
-            </Button>
+            </Button>*/}
           </div>
         );
       })}

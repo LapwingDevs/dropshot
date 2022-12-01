@@ -37,6 +37,7 @@ public class CartService : ICartService
             .ThenInclude(variant => variant.Product)
             .Where(cartItem =>
                 cartItem.CartId == userCart.Id &&
+                cartItem.DropItem.Status == DropItemStatus.Reserved &&
                 cartItem.ReservationEndDateTime > _appDateTime.Now)
             .ToListAsync();
 

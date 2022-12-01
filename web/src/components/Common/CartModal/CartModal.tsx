@@ -30,7 +30,9 @@ const CartModal = ({ isOpen, handleClose }: CartModalProps) => {
           })}
       </div>
       <div>
-        <Button onClick={() => navigate('/order')}>Order</Button>
+        <Button onClick={() => navigate('/order')} variant={'outlined'} style={{ color: 'black' }}>
+          Order
+        </Button>
       </div>
     </Modal>
   );

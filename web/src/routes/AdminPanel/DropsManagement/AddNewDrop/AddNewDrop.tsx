@@ -1,4 +1,4 @@
-import { Button, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Button, MenuItem, Select, Typography, FormControl, InputLabel, TextField } from '@mui/material';
 import React, { useState, useCallback, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { getWarehouseVariants } from '../../../../api/controllers/VariantsClient';
@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { appDateFormat } from '../../../../constants/Dates';
+import './AddNewDrop.scss';
 
 interface IFormData {
   name: string;
@@ -84,7 +85,9 @@ const AddNewDrop = () => {
           <Controller
             name={'name'}
             control={control}
-            render={({ field: { onChange, value } }) => <TextField onChange={onChange} value={value} label={'name'} />}
+            render={({ field: { onChange, value } }) => (
+              <TextField sx={{ marginBottom: '10px' }} onChange={onChange} value={value} label={'name'} />
+            )}
           />
         </div>
 
@@ -93,7 +96,7 @@ const AddNewDrop = () => {
             name={'description'}
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextField sx={{ marginBottom: '10px' }} onChange={onChange} value={value} label={'name'} />
+              <TextField sx={{ marginBottom: '10px' }} onChange={onChange} value={value} label={'description'} />
             )}
           />
         </div>
@@ -103,21 +106,24 @@ const AddNewDrop = () => {
             control={control}
             name={'selectedVariants'}
             render={({ field: { onChange, value } }) => (
-              <Select
-                sx={{ marginBottom: '10px' }}
-                multiple
-                onChange={onChange}
-                value={value}
-                renderValue={(selected) => selected.join(', ')}
-                defaultValue={[]}
-              >
-                {generateSelectOptions()}
-              </Select>
+              <FormControl sx={{ marginBottom: '10px' }}>
+                <InputLabel>Variants</InputLabel>
+                <Select
+                  multiple
+                  onChange={onChange}
+                  value={value}
+                  renderValue={(selected) => selected.join(', ')}
+                  defaultValue={[]}
+                  style={{ width: '223px' }}
+                >
+                  {generateSelectOptions()}
+                </Select>
+              </FormControl>
             )}
           />
         </div>
 
-        <div>
+        <div className="field">
           <Controller
             name={'startDateTime'}
             control={control}
@@ -128,12 +134,13 @@ const AddNewDrop = () => {
                 timeInputLabel="Time:"
                 dateFormat={appDateFormat}
                 showTimeInput
+                placeholderText={'Start date'}
               />
             )}
           />
         </div>
 
-        <div>
+        <div className="field">
           <Controller
             name={'endDateTime'}
             control={control}
@@ -144,6 +151,7 @@ const AddNewDrop = () => {
                 timeInputLabel="Time:"
                 dateFormat={appDateFormat}
                 showTimeInput
+                placeholderText={'End date'}
               />
             )}
           />

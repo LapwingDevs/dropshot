@@ -1,5 +1,31 @@
 version: '3.8'
 services:
+  api:
+    container_name: dotnet_api_container
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Postgres__ConnectionString=Host=postgres_db;Database=DropShot;Username=postgres;Password=postgres
+    build:
+      context: ./api
+      dockerfile: DropShot.API/Dockerfile
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+    networks:
+      - dropshot
+    ports:
+      - "5000:80"
+  
+  client:
+    container_name: react_client_container
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    networks:
+      - dropshot
+    ports:
+      - "3000:3000"
+  
   postgres_db:
     container_name: postgres_container
     image: postgres
@@ -8,8 +34,16 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: DropShot
+    networks:
+      - dropshot
     ports:
       - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   pgadmin:
     container_name: pgadmin4_container
     image: dpage/pgadmin4
@@ -17,5 +51,10 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: root
+    networks:
+      - dropshot
     ports:
       - "5050:80"
+
+networks:
+  dropshot:

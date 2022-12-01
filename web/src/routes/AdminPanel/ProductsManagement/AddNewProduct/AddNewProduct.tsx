@@ -1,4 +1,4 @@
-import { Button, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Button, MenuItem, Select, FormControl, InputLabel, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -77,7 +77,7 @@ const AddNewProduct = () => {
             name={'description'}
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextField sx={{ marginBottom: '10px' }} onChange={onChange} value={value} label={'desc'} />
+              <TextField sx={{ marginBottom: '10px' }} onChange={onChange} value={value} label={'description'} />
             )}
           />
         </div>
@@ -103,9 +103,12 @@ const AddNewProduct = () => {
             control={control}
             name={'unitOfSize'}
             render={({ field: { onChange, value } }) => (
-              <Select sx={{ marginBottom: '10px' }} onChange={onChange} value={value}>
-                {generateSelectOptions()}
-              </Select>
+              <FormControl sx={{ marginBottom: '10px' }}>
+                <InputLabel>Unit of size</InputLabel>
+                <Select onChange={onChange} value={value} style={{ width: '223px' }}>
+                  {generateSelectOptions()}
+                </Select>
+              </FormControl>
             )}
           />
         </div>

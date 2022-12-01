@@ -12,4 +12,5 @@ public class DropItemDto
     public string ProductName { get; set; }
     public ClothesUnitOfMeasure UnitOfSize { get; set; }
     public int Size { get; set; }
+    public DateTime? ReservationEndDateTime { get; set; }
 }

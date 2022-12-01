@@ -21,7 +21,7 @@ const ProductsManagement = () => {
 
   return (
     <div className="container">
-      <Typography variant="h4" sx={{ marginBottom: '10px' }}>
+      <Typography variant="h4" sx={{ marginBottom: '10px' }} >
         Products management
       </Typography>
       {products.map((product) => {
@@ -33,7 +33,7 @@ const ProductsManagement = () => {
         );
       })}
 
-      <Button onClick={() => navigate('new')}>Add product</Button>
+      <Button onClick={() => navigate('new')}  variant={'outlined'}>Add product</Button>
     </div>
   );
 };

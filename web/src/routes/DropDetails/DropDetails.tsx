@@ -123,26 +123,32 @@ const DropDetails = () => {
                   key={dropItem.dropItemId}
                   dropItem={dropItem}
                   addItemToUserCart={() => addItemToUserCart(dropItem.dropItemId)}
+                  addToCardImpossible={new Date(drop.startDateTime).getTime() > new Date().getTime()}
                 />
               );
             })}
           </div>
 
-          <Typography variant="h6" sx={{ marginTop: '15px' }}>
-            Reserved:
-          </Typography>
-          <div className="drop-items-wrapper">
-            {drop.reservedDropItems.map((dropItem) => {
-              return (
-                <DropItemCard
-                  key={dropItem.dropItemId}
-                  dropItem={dropItem}
-                  addItemToUserCart={() => addItemToUserCart(dropItem.dropItemId)}
-                  reserved={true}
-                />
-              );
-            })}
-          </div>
+
+          {new Date(drop.startDateTime).getTime() < new Date().getTime() && (
+            <div>
+                <Typography variant="h6" sx={{ marginTop: '15px' }}>
+                    Reserved:
+                </Typography>
+              <div className="drop-items-wrapper">
+                {drop.reservedDropItems.map((dropItem) => {
+                  return (
+                    <DropItemCard
+                      key={dropItem.dropItemId}
+                      dropItem={dropItem}
+                      addItemToUserCart={() => addItemToUserCart(dropItem.dropItemId)}
+                      addToCardImpossible={true}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       );
     }
