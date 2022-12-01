@@ -1,16 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
+import { AppBar, Avatar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import './TopBar.scss';
 import CartModal from '../CartModal/CartModal';
-import MenuModal from '../MenuModal/MenuModal';
+import UserMenu from '../MenuModal/UserMenu';
 import AuthContext from '../../../contexts/AuthContext';
 import { useCart } from '../../../contexts/CartContext';
 import { getUserCart } from '../../../api/controllers/CartsClient';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import { ShoppingCart } from '@mui/icons-material';
 
 const TopBar = () => {
   const [cartIsOpen, setCartIsOpen] = useState<boolean>(false);
-  const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
   const { currentUser } = React.useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -32,29 +33,29 @@ const TopBar = () => {
       <AppBar position="static">
         <Toolbar>
           <Typography
+            variant="h4"
             className="top-bar-title"
-            variant="h6"
             component="div"
-            sx={{ flexGrow: 1 }}
-            onClick={() => navigate('/drops')}
+            sx={{ flexGrow: 1, color: '#FFFFFF' }}
+            onClick={() => navigate('/')}
           >
             DropShot
           </Typography>
 
           {currentUser && (
             <>
-              <Button color="secondary" onClick={() => setCartIsOpen(true)}>
-                Cart
-              </Button>
-              <Button color="secondary" onClick={() => setMenuIsOpen(true)}>
-                Menu
-              </Button>
+              <IconButton onClick={() => setCartIsOpen(true)}>
+                <Avatar>
+                  <ShoppingCart />
+                </Avatar>
+              </IconButton>
+
+              <UserMenu />
             </>
           )}
         </Toolbar>
       </AppBar>
       <CartModal isOpen={cartIsOpen} handleClose={() => setCartIsOpen(false)} />
-      <MenuModal isOpen={menuIsOpen} handleClose={() => setMenuIsOpen(false)} />
     </Box>
   );
 };

@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import React from 'react';
 import CartItem from '../../components/Common/CartItem/CartItem';
 import { useCart } from '../../contexts/CartContext';
@@ -41,7 +41,9 @@ const Order = () => {
 
   return (
     <div className="order-wrapper">
-      <div>Cart:</div>
+      <Typography variant="h5" sx={{ marginBottom: '15px' }}>
+        Cart:
+      </Typography>
       <div>
         {userCart &&
           userCart.cartItems.map((item) => {
@@ -50,8 +52,8 @@ const Order = () => {
       </div>
       {userCart && userCart.cartItems.length > 0 && (
         <div>
-          <div>Shipping cost: {getShippingCost()} PLN</div>
-          <div>Total price: {getTotalPrice()} PLN</div>
+          <Typography sx={{ marginTop: '15px' }}>Shipping cost: {getShippingCost()} PLN</Typography>
+          <Typography sx={{ marginTop: '5px', marginBottom: '15px' }}>Total price: {getTotalPrice()} PLN</Typography>
         </div>
       )}
       <Button disabled={userCart === undefined || userCart.cartItems.length === 0}>Submit order</Button>
