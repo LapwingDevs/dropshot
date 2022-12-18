@@ -10,6 +10,8 @@ The main requirement was to handle the case where 2 users want to reserve the sa
 
 - ASP.NET 6
 - Clean architecture
+- Entity Framework
+- PostgreSQL
 - Authentication & Authorization in ASP.NET
 - SignalR
 - Background worker
