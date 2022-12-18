@@ -1,5 +1,20 @@
 # dropshot
 
+## Description
+
+The application has been created as university project. 
+
+The main requirement was to handle the case where 2 users want to reserve the same resource. We implemented it in clothes drops system using SignalR.
+
+## Technology stack
+
+- ASP.NET 6
+- Clean architecture
+- Authentication & Authorization in ASP.NET
+- SignalR
+- Background worker
+- React
+
 ## Guide
 
 ### Database
